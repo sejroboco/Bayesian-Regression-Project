@@ -1,29 +1,111 @@
 ---
 title: "Travaux Pratiques de Régression Bayesienne"
-output: pdf_document
 date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+fontsize: 11pt
+geometry: margin=2.5cm
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+\newpage
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Travaux Pratique 1
 
-```{r cars}
-summary(cars)
+L’objectif de ce TP est de comparer le modèle de régression aléatoire, à la régression bayésienne, la régression bayésienne LASSO et la méthode de sélection bayésienne $SSVS$. Le modèle linéaire étudié est le suivant :
+
+$$
+Y = \mu \mathbb{I} + X \beta + \varepsilon
+$$
+
+## Simulation des données
+
+Afin de comparer ces différentes méthodes, des données simulées seront utilisées. Pour cela, on génère un jeu de données de $200$ observation qui sont réparties en données d'apprentissage pour la construction des modèles et des données de test qui serviront à comparer les modèles en terme de performance. L'échantillon sera coupé en deux : $100$ observations pour l'apprentissage et $100$ observations pour le test. On générera également $300$ variables indépendantes et identiquement distribuées (i.i.d.), chacune suivant une loi uniforme entre $-5$ et $5$.
+
+```{r simulation-de-données, echo=TRUE, results='hide'}
+simuVarExpl <- matrix(rep(0, 300*200), ncol=300, nrow=200)
+for (i in 1 :300){
+  simuVarExpl[,i] <- runif(200, -5, 5)
+  simuVarExpl <- as.data.frame(simuVarExpl)
+}
 ```
 
-## Including Plots
+Dans le lot des variables indépendantes générées, nous n'utiliserons que cinq ($05$) pour la simulation de la variable d'intérêt. Il s'agira de celles d'indices $10$, $20$, $30$, $40$ et $50$. Nous utiliserons le vecteur de paramètres $\beta = \left(+1, -1, +2, -2, +3\right)$ et nous supposons que $\mu = 0$.
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r simulation-de-y, echo=TRUE, results='hide'}
+trueInd <- c(10, 20, 30, 40, 50)
+beta <- c(1, -1, 2, -2, 3)
+ySimu <- as.matrix(simuVarExpl)[,trueInd]%*% beta + rnorm(200,0,2)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Mise en place des fonctions utiles
+
+Deux principales fonctions seront utiles pour la réalisation de ce TP. Il s'agit des fonctions de prédiction variables d'intérêt et de sélection de variables explicatives.
+
+### Prédictions
+
+En se basant sur de variables explicatives et des estimateurs de $\mu$ et $\beta$, la fonction suivante permet de faire des prédictions d'une variable d'intérêt.
+
+```{r fonction-de-prediction, echo=TRUE, results='hide'}
+predictions <- function(maTableTest, muChap, betaChap){
+  yChap <- muChap * rep(1, dim(maTableTest)[1] + as.matrix(maTableTest[,]) %*% betaChap)
+  return(yChap)
+}
+```
+
+### Sélections
+
+La fonction suivante sera utile pour la sélection de variables ; elle donne un sous-ensemble de variables pertinentes à sélectionner.
+
+```{r fonction-de-selection, echo=TRUE, results='hide'}
+subsetSelection <- function(resAlgo, varExpl, mini, maxi){
+  numselected <- c(which(resAlgo < mini), which(resAlgo > maxi))
+  selected <- character()
+  valeurs <- numeric()
+  for (i in 1 :length(numselected)) {
+    selected[i] <- names(varExpl)[numselected[i]]
+    valeurs[i] <- resAlgo[numselected[i]] }
+    subset <- cbind(selected, valeurs)
+    subset <- as.data.frame(subset)
+    subset$valeurs <- as.numeric(as.vector(subset$valeurs))
+  return(subset)
+}
+```
+
+
+## Utilisation du package `rrBLUP`
+
+### Estimation
+
+### Prédiction
+
+### Sélection
+
+## La régression bayésienne A
+
+### Fonction
+
+### Estimation
+
+### Prédiction
+
+### Sélection
+
+## La régression bayésienne LASSO
+
+### Estimation
+
+### Prédiction
+
+## La méthode de sélection bayésienne SSVS
+
