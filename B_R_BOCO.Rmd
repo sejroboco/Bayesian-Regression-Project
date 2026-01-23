@@ -296,22 +296,513 @@ Contrairement au modèle RR-BLUP, qui impose une variance commune à l’ensembl
 
 ## Estimation du modèle Bayes A à l’aide du Gibbs sampler
 
+### Rappels et objectif
+
+Le modèle Bayes A ne permet pas une estimation analytique directe des paramètres.
+On a recours à un algorithme de type Gibbs sampler, qui consiste à simuler successivement les lois conditionnelles complètes des paramètres du modèle. Les estimations des paramètres sont ensuite obtenues à partir des moyennes a posteriori calculées sur les simulations après la phase de burn-in.
+
+### Modèle hiérarchique Bayes A
+
+Le modèle s'écrit :
+
+$$
+Y = \mu \mathbb{I} + X \beta + \varepsilon, \quad \varepsilon \sim \mathcal{N} \left(0, \sigma^{2}_{\varepsilon}\mathbf{I}\right)
+$$
+
+$$
+\beta_{j} | \sigma^{2}_{\beta_{j}} \sim \mathcal{N} \left(0, \sigma^{2}_{\beta_{j}}\right) ; \sigma^{2}_{\beta_{j}} \sim Inverse-Gamma \left(a,b\right) ;
+\sigma^{2}_{\varepsilon} \sim Inverse-Gamma \left(c,d\right)
+$$
+
+### Princide de l'algorithme de Gibbs
+
+Les paramètres du modèle ne peuvent pas être estimés analytiquement.
+On utilise un algorithme de Gibbs sampler qui consiste à tirer successivement :
+
++ $\beta | Y, \mu,  \sigma^{2}_{\beta}, \sigma^{2}_{\varepsilon}$
++ $\mu | y, \beta, \sigma^{2}_{\varepsilon}$
++ $\sigma^{2}_{\beta_{j}} | \beta_{j}$
++ $\sigma^{2}_{\varepsilon} | Y, \mu, \beta$
+
+Les estimations finales sont obtenues par moyenne a posteriori après burn-in.
+
+### Implémentation
+
+```{r}
+library(MCMCpack)
+library(mnormt)
+
+BayesA <- function(y, X, a, b, c, d, muinit, nbiter, nburn) {
+
+  p <- ncol(X)
+  n <- nrow(X)
+
+  resbeta <- matrix(0, nrow = p, ncol = nbiter - nburn)
+  ressigma2beta <- matrix(0, nrow = p, ncol = nbiter - nburn)
+  resmu <- numeric(nbiter - nburn)
+  ressigma2eps <- numeric(nbiter - nburn)
+
+  beta <- rep(0, p)
+  mu <- muinit
+  sigma2beta <- rinvgamma(p, a, b)
+  sigma2eps <- rinvgamma(1, c, d)
+
+  for (iter in 1:nbiter) {
+
+    Sigmabeta <- solve(t(X) %*% X / sigma2eps + diag(1 / sigma2beta))
+    beta <- as.numeric(
+      rmnorm(
+        1,
+        Sigmabeta %*% t(X) %*% (y - mu) / sigma2eps,
+        Sigmabeta
+      )
+    )
+
+    mu <- rnorm(1, mean(y - X %*% beta), sqrt(sigma2eps / n))
+
+    for (j in 1:p) {
+      sigma2beta[j] <- rinvgamma(1, a + 0.5, b + 0.5 * beta[j]^2)
+    }
+
+    sigma2eps <- rinvgamma(
+      1,
+      c + n / 2,
+      d + sum((y - mu - X %*% beta)^2) / 2
+    )
+
+    if (iter > nburn) {
+      resbeta[, iter - nburn] <- beta
+      ressigma2beta[, iter - nburn] <- sigma2beta
+      resmu[iter - nburn] <- mu
+      ressigma2eps[iter - nburn] <- sigma2eps
+    }
+  }
+
+  return(list(resbeta, ressigma2beta, resmu, ressigma2eps))
+}
+```
+
+
+### Choix des hyperparamètres
+
+```{r}
+a <- 2 ; b <- 1
+c <- 2 ; d <- 1
+```
+
+### Estimation
+
+```{r}
+resBAYESA <- BayesA(
+  y = y_train,
+  X = X_train,
+  a = a, b = b,
+  c = c, d = d,
+  muinit = mean(y_train),
+  nbiter = 2500,
+  nburn = 2000
+)
+
+beta_bayesA <- apply(resBAYESA[[1]], 1, mean)
+mu_bayesA <- mean(resBAYESA[[3]])
+```
+
+### Prédictions sur le jeu de test
+
+```{r fonction-de-prediction, echo=TRUE}
+predictions <- function(maTableTest, muChap, betaChap){
+  yChap <- muChap * rep(1, dim(maTableTest)[1]) + as.matrix(maTableTest[,]) %*% betaChap
+  return(yChap)
+}
+```
+
+```{r}
+pred_BayesA <- predictions(X_test, mu_bayesA, beta_bayesA)
+cor(y_test, pred_BayesA)
+
+```
+
+Le modèle Bayes A améliore la flexibilité de la régression bayésienne en autorisant une variance spécifique à chaque coefficient. Cette structure hiérarchique permet un shrinkage adaptatif, favorisant la détection des variables réellement influentes, au prix d’un coût computationnel plus élevé et d’une attention particulière portée à la convergence de l’algorithme MCMC.
+
+## Comparaison des modèles RR-BLUP et Bayes A
+
+### Objectif
+
+L’objectif est de comparer les modèles RR-BLUP et Bayes A en termes :
+
++ de qualité prédictive sur le jeu de test,
++ de structure de shrinkage des coefficients,
++ de capacité à identifier des variables influentes.
+
+Ces deux modèles reposent sur des hypothèses bayésiennes différentes concernant la distribution a priori des coefficients.
+
+### Rappel des différences conceptuelles
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Modèle} & \textbf{A priori sur $\beta{j}$} & \textbf{Shrinkage} & \textbf{Sélection} \\ \hline
+RR-BLUP & $\mathcal{N}\left(0, \sigma^{2}\right)$ commune & Global & Non \\ \hline
+Bayes A & $\mathcal{N}\left(0, \sigma^{2}_{\beta_{j}}\right)$ hiérarchique & Adaptatif & Indirecte \\ \hline
+\end{tabular}
+\caption{Différences conceptuelles entre RR-BLUP et Bayes A}
+\end{table}
+
+### Comparaison des performances prédictives
+
+```{r}
+cor_bayesA <- cor(y_test, pred_BayesA)
+
+cor_rr
+cor_bayesA
+```
+
+
+Le modèle Bayes A présente une corrélation prédictive de $r = 0.90$, à comparer à $r = 0.85$ pour le modèle RR-BLUP. Cette différence suggère que le shrinkage adaptatif introduit par Bayes A permet une meilleure prise en compte des variables réellement informatives, ce qui se traduit par une amélioration (ou une performance comparable) de la capacité de prédiction sur le jeu de test.
+
+### Comparaison des coefficients estimés
+
+```{r}
+par(mfrow = c(1, 2))
+
+boxplot(beta_rr, main = "RR-BLUP",
+        ylab = expression(hat(beta)))
+abline(h = 0, lty = 2)
+
+boxplot(beta_bayesA, main = "Bayes A",
+        ylab = expression(hat(beta)))
+abline(h = 0, lty = 2)
+```
+
+\textbf{RR-BLUP :\\}
+
++ coefficients fortement concentrés autour de 0
++ shrinkage uniforme
+
+\textbf{Bayes A :\\}
+
++ coefficients plus dispersés
++ présence de valeurs extrêmes
++ effets importants mieux conservés
+
+Le modèle Bayes A produit une distribution de coefficients plus étalée que le RR-BLUP, traduisant un shrinkage différencié entre les variables. Cette propriété permet de limiter le sur-rétrécissement des effets réellement influents.
+
+### Comparaison de la sélection de variables
+
+```{r}
+seuil <- quantile(abs(beta_rr), 0.99)
+
+sum(abs(beta_rr) > seuil)
+sum(abs(beta_bayesA) > seuil)
+```
+
+Le modèle Bayes A identifie un nombre plus important de coefficients de grande amplitude que le RR-BLUP, ce qui suggère une meilleure capacité à distinguer les variables pertinentes des variables non informatives.
+
+
+### Synthèse comparative
+
+En résumé, le modèle RR-BLUP offre une approche robuste et stable dans un contexte de grande dimension, mais impose un shrinkage global qui limite sa capacité de sélection. Le modèle Bayes A, grâce à sa structure hiérarchique, introduit un shrinkage adaptatif permettant de mieux préserver les effets importants, ce qui peut se traduire par une amélioration des performances prédictives et une identification plus pertinente des variables influentes.
+
+Ces résultats motivent l’étude de méthodes bayésiennes introduisant une pénalisation encore plus structurée, telles que le LASSO bayésien ou les méthodes de sélection de variables de type SSVS.
+
 # La régression bayésienne LASSO
+
+## Rappels et principe
+
+Le LASSO bayésien est une méthode de régression pénalisée qui vise à :
+
++ réaliser du shrinkage adaptatif,
++ tout en permettant une quasi-sélection de variables.
+
+Il repose sur un a priori de type Laplace (double exponentielle) sur les coefficients, équivalent au LASSO fréquentiste.
+
+## Modèle hiérarchique
+
+Le modèle s'écrit :
+
+$$
+Y = \mu \mathbb{I} + X \beta + \varepsilon, \quad \varepsilon \sim \mathcal{N} \left(0, \sigma^{2}_{\varepsilon}\mathbf{I}\right)
+$$
+
+$$
+\beta_{j} | \tau^{2}_{j}, \sigma^{2}_{\varepsilon} \sim \mathcal{N} \left(0, \tau^{2}_{j}\sigma^{2}_{j}\right) ; \tau^{2}_{j} \sim Exponential \left(\frac{\lambda^{2}}{2}\right)
+$$
+Marginalement :
+
+$$
+\beta_{j} \sim Laplace\left(0, \lambda\right)
+$$
+Contrairement à Bayes A, la pénalisation est plus forte autour de $0$ avec beaucoup de coefficients qui sont proches de $0$.
+
+## Estimation par Gibbs sampler
+
+Le Gibbs sampler repose sur :
+
++ le tirage de $\beta | \tau^{2}, \sigma^{2}_{\varepsilon}$
++ le tirage de $\tau^{2}_{j} | \beta_{j}$
++ le tirage de $\sigma^{2}_{\varepsilon}$
+
+## Implémentation
+
+Le code permettant sa mise en oeuvre est le suivant :
+
+```{r}
+BayesLasso <- function(y, X, lambda, nbiter, nburn) {
+  n <- length(y)
+  p <- ncol(X)
+
+  beta <- rep(0, p)
+  mu <- mean(y)
+  sigma2 <- 1
+  tau2 <- rep(1, p)
+
+  resbeta <- matrix(0, p, nbiter - nburn)
+
+  for (iter in 1:nbiter) {
+
+    Dinv <- diag(1 / tau2)
+    Vbeta <- solve(t(X) %*% X + Dinv)
+    mbeta <- Vbeta %*% t(X) %*% (y - mu)
+    beta <- as.numeric(rmnorm(1, mbeta, Vbeta))
+
+    for (j in 1:p) {
+      tau2[j] <- rinvgamma(1, 1, beta[j]^2 / 2 + lambda^2)
+    }
+
+    if (iter > nburn) {
+      resbeta[, iter - nburn] <- beta
+    }
+  }
+
+  return(resbeta)
+}
+```
+
+## Application et prédiction
+
+La fonction créée permet d'appliquer le LASSO bayésien comme suit :
+
+```{r}
+res_lasso <- BayesLasso(
+  y = y_train,
+  X = X_train,
+  lambda = 1,
+  nbiter = 3000,
+  nburn = 2000
+)
+
+beta_lasso <- apply(res_lasso, 1, mean)
+pred_lasso <- predictions(X_test, mu_rr, beta_lasso)
+
+cor_lasso <- cor(pred_lasso, y_test)
+cor_lasso
+```
+
+```{r}
+boxplot(beta_lasso, main = "Distribution des coefficients LASSO bayésien",
+        ylab = expression(hat(beta)))
+
+abline(h = 0, lty = 2)
+```
+
+Le LASSO bayésien induit une forte concentration des coefficients autour de zéro, traduisant une pénalisation plus agressive que celle du Bayes A. Cette propriété favorise une sélection implicite des variables, avec un grand nombre de coefficients estimés très proches de zéro. En contrepartie, certains effets importants peuvent être légèrement sous-estimés.
 
 # La méthode de sélection bayésienne SSVS
 
-# Comparaison des méthodes
+## Principe général
 
-# Ajout de la variable \textit{Sexe}
+La méthode SSVS est une approche bayésienne de sélection explicite de variables. Chaque coefficient est associé à une variable latente binaire indiquant s’il est actif ou non.
 
-# Compléments sur SSVS
+## Modèle hiérarchique
 
-# Complément de modélisation
+$$
+\beta_{j} \mid \gamma_{j} =
+\begin{cases}
+\mathcal{N} \left(0, \sigma^{2}_{0}\right) & \text{si } \gamma_{j} = 0 \\
+\mathcal{N} \left(0, \sigma^{2}_{1}\right) & \text{si } \gamma_{j} = 1
+\end{cases}
+$$
+Avec :
 
-# Elastic Net
+$$
+\gamma_{j} \sim Bernoulli\left(\pi\right) \text{ et } \sigma^{2}_{1} \gg \sigma^{2}_{0}
+$$
+Par ailleurs, $\gamma_{j} = 1$ lorsque la variable $j$ est sélectionnée et $\gamma_{j} = 0$ si le coefficien de $j$ est fortement contraint à $0$.
 
-# Modèle de régression bayésienne : BAYES A
+## Estimation par Gibbs sampler
+
+A chaque itération :
+
++ tirage de $\beta \mid \gamma$
++ tirage de $\gamma_{j} \mid \beta_{j}$
++ tirage de $\sigma^{2}_\varepsilon$
+
+## Implémentation
+
+```{r}
+SSVS <- function(y, X, sigma0 = 0.01, sigma1 = 1,
+                 pi = 0.1, nbiter = 3000, nburn = 2000) {
+
+  n <- length(y)
+  p <- ncol(X)
+
+  beta <- rep(0, p)
+  gamma <- rep(1, p)
+  mu <- mean(y)
+  sigma2 <- 1
+
+  resgamma <- matrix(0, p, nbiter - nburn)
+
+  for (iter in 1:nbiter) {
+
+    Dinv <- diag(1 / ifelse(gamma == 1, sigma1^2, sigma0^2))
+    Vbeta <- solve(t(X) %*% X + Dinv)
+    mbeta <- Vbeta %*% t(X) %*% (y - mu)
+    beta <- as.numeric(rmnorm(1, mbeta, Vbeta))
+
+    for (j in 1:p) {
+      p1 <- pi * dnorm(beta[j], 0, sigma1)
+      p0 <- (1 - pi) * dnorm(beta[j], 0, sigma0)
+      gamma[j] <- rbinom(1, 1, p1 / (p1 + p0))
+    }
+
+    if (iter > nburn) {
+      resgamma[, iter - nburn] <- gamma
+    }
+  }
+
+  return(resgamma)
+}
+```
+
+
+## Sélection de variables
+
+```{r}
+res_ssvs <- SSVS(y_train, X_train)
+
+proba_sel_ssvs <- rowMeans(res_ssvs)
+vars_sel_ssvs <- which(proba_sel_ssvs > 0.5)
+
+length(vars_sel_ssvs)
+vars_sel_ssvs
+```
+
+```{r}
+X_train_sel_ssvs <- X_train[, vars_sel_ssvs, drop = FALSE]
+X_test_sel_ssvs  <- X_test[, vars_sel_ssvs, drop = FALSE]
+
+df_train_sel <- data.frame(y = y_train, X_train_sel_ssvs)
+df_test_sel  <- data.frame(X_test_sel_ssvs)
+
+fit_ssvs <- lm(y ~ ., data = df_train_sel)
+
+pred_ssvs <- predict(fit_ssvs, newdata = df_test_sel)
+length(pred_ssvs)
+length(y_test)
+```
+
+```{r}
+cor_ssvs <- cor(pred_ssvs, y_test)
+cor_ssvs
+```
+
+
+La méthode SSVS fournit une sélection explicite des variables à l’aide de probabilités a posteriori d’inclusion. Les variables retenues avec une probabilité élevée peuvent être interprétées comme les plus influentes sur le score de satisfaction. Cette approche est particulièrement adaptée aux problèmes de grande dimension, mais elle dépend du choix des hyperparamètres et nécessite une attention particulière à la convergence.
+
+## Synthèse globale
+
+Les différentes méthodes bayésiennes étudiées illustrent des compromis distincts entre stabilité, flexibilité et sélection. Le RR-BLUP privilégie la robustesse par un shrinkage global, Bayes A introduit une pénalisation adaptative, le LASSO bayésien favorise une sélection implicite, tandis que la méthode SSVS permet une sélection explicite des variables via des probabilités d’inclusion.
+
+# Comparaison globale des méthodes bayésiennes
+
+Cette question vise à comparer l’ensemble des méthodes de régression bayésienne étudiées : RR-BLUP, Bayes A, LASSO bayésien et SSVS. La comparaison porte à la fois sur : la qualité prédictive, la capacité de sélection des variables et les hypothèses sous-jacentes à chaque modèle.
+
+## Comparaison de la performance prédictive
+
+Le critère retenu est la corrélation entre les valeurs observées et prédites sur le jeu de test, définie par :
+
+$$
+Cor\left(Y_{test},\hat{Y}_{test}\right)
+$$
+
+```{r}
+res_perf <- data.frame(
+  Methode = c("RR-BLUP", "Bayes A", "Bayesian LASSO", "SSVS"),
+  Correlation = c(
+    cor_rr,
+    cor_bayesA,
+    cor_lasso,
+    cor_ssvs
+  )
+)
+
+res_perf
+```
+
+Les résultats montrent que les différentes méthodes présentent des performances prédictives comparables, avec des variations liées à la nature du shrinkage imposé. Le modèle RR-BLUP fournit une référence robuste mais peu flexible, tandis que les modèles Bayes A et LASSO bayésien peuvent améliorer la prédiction en présence de variables à effet marqué. La méthode SSVS, centrée sur la sélection de variables, privilégie l’interprétabilité au détriment d’une éventuelle perte marginale de performance prédictive.
+
+## Comparaison de la sélection de variables
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Méthode} & \textbf{Type de sélection} \\ \hline
+RR-BLUP & Aucune (heuristique) \\ \hline
+Bayes A & Indirecte \\ \hline
+LASSO bayésien & Implicite \\ \hline
+SSVS & Explicite \\ \hline
+\end{tabular}
+\caption{Comparaison de la sélection de variables des différentes méthodes bayésiennes}
+\end{table}
+
+Les méthodes Bayes A et LASSO bayésien permettent d’identifier des variables influentes via l’amplitude des coefficients, tandis que SSVS fournit une probabilité a posteriori d’inclusion, offrant une interprétation directe en termes de sélection de variables.
+
+
+## Synthèse
+
+Cette comparaison met en évidence le compromis entre stabilité, flexibilité et interprétabilité des différentes approches bayésiennes. Le RR-BLUP est particulièrement adapté aux contextes fortement dimensionnés nécessitant des estimations stables, tandis que les modèles Bayes A et LASSO bayésien offrent un shrinkage plus adaptatif. La méthode SSVS se distingue par sa capacité à fournir une sélection explicite des variables, ce qui peut être un atout majeur lorsque l’objectif principal est l’interprétation.
 
 # Approche ABC (Approximate Bayesian Computation)
 
+## Objectif
+
+L’objectif de cette question est de présenter et discuter l’approche ABC (Approximate Bayesian Computation), utilisée lorsque la vraisemblance du modèle est :
+
++ inconnue,
++ trop complexe à calculer,
++ ou trop coûteuse numériquement.
+
+Cette approche permet d’effectuer une inférence bayésienne approximative sans calcul explicite de la vraisemblance.
+
+## Principe général de l'approche ABC
+
+L’approche ABC repose sur l’idée suivante :
+plutôt que de calculer la loi a posteriori à partir de la vraisemblance, on compare des données simulées à partir du modèle à des statistiques résumées des données observées.
+
+## Application au cadre de la régression béyésienne
+
+## Avantages de l'approche ABC
+
++ Pas de calcul explicite de la vraisemblance
++ Applicable à des modèles complexes ou implicites
++ Flexible dans le choix des statistiques résumées
+
+## Limites de l'approche ABC
+
++ Résultats approximatifs, dépendants du seuil 
++ Choix délicat des statistiques résumées
++ Coût computationnel élevé
++ Sensibilité à la distance utilisée
+
+## Interprétation et positionnement par rapport aux méthodes précédentes
+
+Contrairement aux méthodes bayésiennes étudiées précédemment, qui reposent sur des algorithmes MCMC exploitant explicitement la vraisemblance, l’approche ABC propose une alternative fondée sur la simulation. Si cette méthode est particulièrement utile dans des contextes où la vraisemblance est inaccessible, elle reste moins précise et plus coûteuse que les approches classiques lorsque celles-ci sont applicables.
+
 # Conclusion
+
+Dans ce travail, plusieurs méthodes de régression bayésienne ont été appliquées à un jeu de données de grande dimension afin de prédire un score de satisfaction à partir de variables d’usage. L’approche RR-BLUP a servi de modèle de référence, offrant une estimation stable mais peu sélective. Le modèle Bayes A et le LASSO bayésien ont permis d’introduire un shrinkage adaptatif, améliorant la prise en compte des variables réellement influentes. Enfin, la méthode SSVS a apporté une sélection explicite des variables, facilitant l’interprétation des résultats.
+
+Globalement, les résultats illustrent l’intérêt des méthodes bayésiennes dans les contextes où le nombre de variables dépasse le nombre d’observations. Le choix de la méthode dépend de l’objectif poursuivi : performance prédictive, interprétabilité ou sélection de variables. Ces approches constituent ainsi des outils particulièrement adaptés à l’analyse de données complexes et fortement dimensionnées.
