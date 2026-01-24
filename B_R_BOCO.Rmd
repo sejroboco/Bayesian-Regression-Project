@@ -20,13 +20,18 @@ header-includes:
   - \usepackage{longtable}
   - \usepackage{array}
   - \usepackage{geometry}
+  - \setcounter{section}{-1}
+  - \setcounter{tocdepth}{2}
 
   - \pagestyle{fancy}
+  
   - \fancyhead[C]{}
   - \fancyhead[L]{ENSAI}
   - \fancyhead[R]{\textcolor{blue}{Data Science \& Marketing}}
+  
   - \renewcommand{\headrulewidth}{0.4pt}
   - \renewcommand{\footrulewidth}{0.4pt}
+  
   - \fancyfoot[C]{\thepage}
   - \fancyfoot[L]{Ali A. \& Toussaint B.}
   - \fancyfoot[R]{Régression bayésienne}
@@ -37,23 +42,10 @@ header-includes:
 
   - >
     \posttitle{\end{center}}
-    
+  - \renewcommand{\contentsname}{Table des matières}
   - \renewcommand{\listfigurename}{Liste des figures}
   - \renewcommand{\listtablename}{Liste des tableaux}
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      warning = FALSE,
-                      message = FALSE)
-
-set.seed(2026)
-```
-
-\setcounter{section}{-1}
-\setcounter{tocdepth}{2}
-
-\renewcommand{\contentsname}{Table des matières}
 
 \newpage
 \tableofcontents
@@ -63,6 +55,14 @@ set.seed(2026)
 
 \newpage
 \listoffigures
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+
+set.seed(2026)
+```
 
 \newpage
 
@@ -780,9 +780,140 @@ Cette approche permet d’effectuer une inférence bayésienne approximative san
 ## Principe général de l'approche ABC
 
 L’approche ABC repose sur l’idée suivante :
-plutôt que de calculer la loi a posteriori à partir de la vraisemblance, on compare des données simulées à partir du modèle à des statistiques résumées des données observées.
+plutôt que de calculer la loi a posteriori à partir de la vraisemblance, on compare des données simulées à partir du modèle à des statistiques résumées des données observées. Le schéma général de cette approche est le suivant :
+
+1. Simuler un paramètre $\theta^{\star}$ depuis la loi a priori
+2. Simuler des données $y^{\star} \mid \theta^{\star}$
+3. Calculer des statistiques résumées sur ces données ($S\left(y{\star}\right)$)
+4. Accepter $\theta^{\star}$ si :
+
+$$
+d\left(S\left(y^{\star}\right), S\left(y\right)\right) \leq \epsilon
+$$
+avec $d\left(\cdot, \cdot\right)$ une distance et $\varepsilon$, une mesure de tolérance. Les paramètres acceptés forment une approximation de la loi a posteriori.
 
 ## Application au cadre de la régression béyésienne
+
+Dans le contexte de la régression bayésienne, $\theta$ représente les paramètres du modèle (par exemple, $\beta$, $\mu$, $\sigma^{2}$). Les statistiques résumées peuvent être : les coefficients estimés, la variance résiduelle, la corrélation entre valeurs observées et prédites. L’approche ABC permet ainsi de contourner le calcul explicite de la vraisemblance lorsque celle-ci est difficile à manipuler.
+
+### Rappel du principe ABC dansnotre contexte
+
+Dans notre problème de régression bayésienne, on considère le modèle :
+
+$$
+Y = \mu \mathbb{I} + X \beta + \varepsilon, \quad \varepsilon \sim \mathcal{N} \left(0, \sigma^{2}_{\varepsilon}\mathbf{I}\right)
+$$
+Lorsque la vraisemblance est difficile à exploiter ou que l’on souhaite éviter les algorithmes MCMC classiques, l’approche ABC (Approximate Bayesian Computation) permet d’effectuer une inférence bayésienne par simulation, sans calcul explicite de la vraisemblance.
+
+Le principe consiste à :
+
+1. simuler des paramètres depuis les lois a priori ;
+2. simuler des données à partir du modèle ;
+3. comparer les données simulées aux données observées à l’aide d’une distance ;
+4. accepter les paramètres si la distance est inférieure à un seuil fixé.
+
+### Choix méthodologiques pour notre application
+
+\textbf{Paramètres simulés}
+
++ $\mu \sim \mathcal{U}\left(-a,a\right)$
++ $\beta \sim \mathcal{N}\left(0,V\mathbf{I}_{p}\right)$
++ $\sigma^{2} \sim \mathcal{\chi^{2}}\left(b\right)$
+
+\textbf{Statistique résuée}
+
+Compte tenu de la dimension élevée du problème, on utilise une distance globale entre les données simulées et observées :
+
+$$
+d\left(y, y^{\star}\right) = \sqrt{\frac{1}{n}\sum_{i=1}^{n}\left(y_i-y^{\star}_i\right)^{2}}
+$$
+Cette distance correspond à une erreur quadratique moyenne, simple et adaptée au cadre prédictif.
+
+### Algorithme ABC adapté
+
+L’algorithme ABC utilisé est un *algorithme acceptation–rejet* :
+
+1. Simuler $\left(\mu^{\star}, \beta^{\star}, \sigma^{2\star}\right)$
+2. Simuler $y \mid \mu^{\star}, \beta^{\star}, \sigma^{2\star}$
+3. Calculer $d\left(y, y^{\star}\right)$
+4. Accepter si $d\left(y, y^{\star}\right) \leq \epsilon$
+
+### Implémentation R
+
+```{r}
+ABC_regression <- function(y, X, a, b, V, seuil, K) {
+
+  n <- length(y)
+  p <- ncol(X)
+
+  res_beta <- matrix(0, nrow = p, ncol = K)
+  res_mu <- numeric(K)
+  res_s2 <- numeric(K)
+
+  accept <- 0
+
+  for (k in 1:K) {
+
+    # 1. Simulation des paramètres a priori
+    mu_star <- runif(1, -a, a)
+    s2_star <- rchisq(1, b)
+    beta_star <- as.numeric(rmnorm(1, rep(0, p), V * diag(p)))
+
+    # 2. Simulation des données
+    y_star <- mu_star + X %*% beta_star + rnorm(n, 0, sqrt(s2_star))
+
+    # 3. Distance
+    dist <- sqrt(mean((y - y_star)^2))
+
+    # 4. Acceptation
+    if (dist < seuil) {
+      accept <- accept + 1
+      res_beta[, accept] <- beta_star
+      res_mu[accept] <- mu_star
+      res_s2[accept] <- s2_star
+    }
+  }
+
+  return(list(
+    beta = res_beta[, 1:accept, drop = FALSE],
+    mu = res_mu[1:accept],
+    sigma2 = res_s2[1:accept],
+    taux_acceptation = 100 * accept / K
+  ))
+}
+```
+
+### Application aux données
+
+```{r}
+res_ABC <- ABC_regression(
+  y = y_train,
+  X = X_train,
+  a = 5,
+  b = 5,
+  V = 10,
+  seuil = 15,
+  K = 5000
+)
+
+res_ABC$taux_acceptation
+```
+
+
+### Exploitation des résultats
+
+```{r}
+beta_ABC <- rowMeans(res_ABC$beta)
+mu_ABC <- mean(res_ABC$mu)
+```
+
+```{r}
+plot(sort(abs(beta_ABC)),
+     main = "Coefficients estimés par ABC",
+     ylab = expression(hat(beta)))
+
+```
+
 
 ## Avantages de l'approche ABC
 
