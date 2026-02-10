@@ -216,7 +216,7 @@ cat("Taille du jeu de test:", nrow(test), "\n")
 cat("Nombre de variables explicatives:", ncol(X_train), "\n")
 ```
 
-La séparation aléatoire en 100 observations d’apprentissage et 50 observations de test garantit une base suffisante pour estimer les modèles tout en conservant un échantillon indépendant pour évaluer la performance prédictive. Le seed fixé à 123 assure la reproductibilité des résultats.
+La séparation aléatoire en 100 observations d’apprentissage et 50 observations de test garantit une base suffisante pour estimer les modèles tout en conservant un échantillon indépendant pour évaluer la performance prédictive. Le seed fixé à 2026 assure la reproductibilité des résultats.
 
 \newpage
 
@@ -1692,13 +1692,13 @@ selection_SSVS <- function(Y, X, nIter = 10000, burnIn = 2000,
 
 ```{r ssvs_estimation}
 # Application de SSVS
-set.seed(123)
+set.seed(2026)
 
 # Paramètres
 pi_prior <- 0.1   # A priori : 10% des variables sélectionnées
 c_param <- 50     # Coefficient de sélection modéré
-nIter_ssvs <- 150
-burnIn_ssvs <- 30
+nIter_ssvs <- 15000  # Nombre d'itérations total
+burnIn_ssvs <- 3000   # Nombre d'itérations de burn-in
 
 cat("Lancement de SSVS...\n")
 cat("Paramètres : $\\pi=$", pi_prior, ", c =", c_param, "\n\n")
@@ -1809,20 +1809,20 @@ ggplot(trace_df, aes(x = iteration, y = gamma, color = type)) +
 
 # Configuration 1 : π faible (a priori parcimonieux)
 pi1 <- 0.05
-ssvs1 <- selection_SSVS(Y_train, X_train, nIter = 80, burnIn = 20,
+ssvs1 <- selection_SSVS(Y_train, X_train, nIter = 8000, burnIn = 2000,
                         pi_prior = pi1, c_param = 50, r_change = 3)
 
 # Configuration 2 : π élevé (a priori généreux)
 pi2 <- 0.3
-ssvs2 <- selection_SSVS(Y_train, X_train, nIter = 80, burnIn = 20,
+ssvs2 <- selection_SSVS(Y_train, X_train, nIter = 8000, burnIn = 2000,
                         pi_prior = pi2, c_param = 50, r_change = 3)
 
 # Configuration 3 : c faible (peu de confiance dans les données)
-ssvs3 <- selection_SSVS(Y_train, X_train, nIter = 80, burnIn = 20,
+ssvs3 <- selection_SSVS(Y_train, X_train, nIter = 8000, burnIn = 2000,
                         pi_prior = 0.1, c_param = 10, r_change = 3)
 
 # Configuration 4 : c élevé (forte confiance dans les données)
-ssvs4 <- selection_SSVS(Y_train, X_train, nIter = 80, burnIn = 20,
+ssvs4 <- selection_SSVS(Y_train, X_train, nIter = 8000, burnIn = 2000,
                         pi_prior = 0.1, c_param = 200, r_change = 3)
 
 # Comparaison des sélections
@@ -3098,7 +3098,7 @@ ggplot(ic_data, aes(x = Variable, y = Estimate, color = Méthode)) +
 library(glmnet)
 
 # 1. LASSO fréquentiste (alpha = 1)
-set.seed(123)
+set.seed(2026)
 cv_lasso_freq <- cv.glmnet(X_train, Y_train, alpha = 1, nfolds = 10)
 lasso_freq_model <- glmnet(X_train, Y_train, alpha = 1, 
                             lambda = cv_lasso_freq$lambda.min)
