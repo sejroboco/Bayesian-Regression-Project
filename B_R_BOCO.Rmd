@@ -145,6 +145,8 @@ y_test <- y[ind_test]
 
 # Utilisation du package `rrBLUP`
 
+Compte tenu de la structure du jeu de données et du caractère fortement dimensionné du problème, nous commençons l’analyse par une régression aléatoire de type RR-BLUP, qui constitue une référence bayésienne simple reposant sur un shrinkage global des coefficients.
+
 ## Estimation
 
 ### Rappels et objectif
@@ -194,8 +196,6 @@ mu_rr
 ```
 
 La sortie `beta_rr` correspond aux effets estimés des 160 chaînes. La moyenne globale du score de satisfaction est $-0.05906177$. La méthode RR-BLUP fournit une estimation des effets des chaînes en imposant un rétrécissement global des coefficients. Cette approche permet d’obtenir des estimations stables dans un contexte de grande dimension, mais ne réalise pas une sélection stricte des variables. Les coefficients estimés sont tous non nuls et de faible amplitude, ce qui reflète l’hypothèse a priori d’une variance commune pour l’ensemble des effets.
-
-
 
 
 ## Prédiction
