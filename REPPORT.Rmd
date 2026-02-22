@@ -47,6 +47,20 @@ header-includes:
   - \renewcommand{\listtablename}{Liste des tableaux}
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+
+set.seed(2026)
+```
+
+\newpage
+
+\setcounter{tocdepth}{2}
+
+\renewcommand{\contentsname}{Table des matières}
+
 \newpage
 \tableofcontents
 
@@ -55,14 +69,6 @@ header-includes:
 
 \newpage
 \listoffigures
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      warning = FALSE,
-                      message = FALSE)
-
-set.seed(2026)
-```
 
 \newpage
 
@@ -122,11 +128,11 @@ La variable réponse présente une distribution globalement symétrique, ce qui 
 
 En considérant un lot de variables explicatives, on remarque bien que leurs moyennes sont proches de $0$ et que les écarts-types valent $1$.
 
-```{r}
+```{r, results='hide'}
 apply(data[, c(5, 8, 9, 50)], 2, mean)
 ```
 
-```{r}
+```{r, results='hide'}
 apply(data[, c(5, 8, 9, 50)], 2, sd)
 ```
 
@@ -209,20 +215,20 @@ beta_hat_rr[1:5]
 mu_hat_rr
 ```
 
-La sortie `beta_hat_rr` correspond aux effets estimés des $160$ chaînes. La moyenne globale du score de satisfaction est $-0.059$. La méthode RR-BLUP fournit une estimation des effets des chaînes en imposant un rétrécissement global des coefficients. Cette approche permet d’obtenir des estimations stables dans un contexte de grande dimension, mais ne réalise pas une sélection stricte des variables. Les coefficients estimés sont tous non nuls et de faible amplitude, ce qui reflète l’hypothèse a priori d’une variance commune pour l’ensemble des effets.
+La sortie `beta_hat_rr` correspond aux effets estimés des $160$ chaînes. La moyenne globale du score de satisfaction est `r round(mu_hat_rr, 3)`. La méthode RR-BLUP fournit une estimation des effets des chaînes en imposant un rétrécissement global des coefficients. Cette approche permet d’obtenir des estimations stables dans un contexte de grande dimension, mais ne réalise pas une sélection stricte des variables. Les coefficients estimés sont tous non nuls et de faible amplitude, ce qui reflète l’hypothèse a priori d’une variance commune pour l’ensemble des effets.
 
 ## 1.2. Prédiction
 
 ### 1.2.1. Rappels et objectif
 
-Une fois les paramètres du modèle RR-BLUP estimés sur le jeu d’apprentissage, l’objectif est d’évaluer la capacité prédictive du modèle sur des données non utilisées lors de l’estimation. La qualité de la prédiction est mesurée par la corrélation entre les valeurs observées et les valeurs prédites sur le jeu de test. Cette mesure est couramment utilisée en régression pénalisée et en génomique pour évaluer la performance prédictive globale d’un modèle.
+Une fois les paramètres du modèle RR-BLUP estimés sur le jeu d’apprentissage, l’objectif est d’évaluer la capacité prédictive du modèle sur des données non utilisées lors de l’estimation. La qualité de la prédiction est mesurée par la corrélation linéaire entre les valeurs observées et les valeurs prédites sur le jeu de test. Cette mesure est couramment utilisée en régression pénalisée et en génomique pour évaluer la performance prédictive globale d’un modèle.
 
 ### 1.2.2. Formule de prédiction
 
 Pour une observation du jeu de test, la valeur prédite est donnée par :
 
 $$
-\hat{Y}_{test} = \hat{\mu} + X_{test}\hat{\beta}
+\hat{Y}_{test} = \hat{\mu} \mathbb{I} + X_{test}\hat{\beta}
 $$
 avec $\hat{\mu}$, le score moyen estimé et $\hat{\beta}$, le vecteur des coefficients estimés sur le jeu d'apprentissage.
 
@@ -250,10 +256,12 @@ Deux approches complémentaires sont possibles :
 + Analyse visuelle à l’aide d’un boxplot des coefficients estimés ;
 + Sélection par seuillage, en retenant les coefficients dont la valeur absolue dépasse un certain quantile élevé de la distribution.
 
-Ces méthodes permettent d’identifier un petit nombre de variables susceptibles d’avoir un impact important sur le score de satisfaction
+Ces méthodes permettent d’identifier un petit nombre de variables susceptibles d’avoir un impact important sur le score de satisfaction.
 
 ```{r rr_variable_selection, results='hide'}
+
 # Sélection basée sur le boxplot (méthode des outliers)
+
 Q1 <- quantile(abs(beta_hat_rr), 0.25)
 Q3 <- quantile(abs(beta_hat_rr), 0.75)
 IQR <- Q3 - Q1
@@ -270,7 +278,9 @@ cat("Seuil de sélection (|beta|):", seuil_rr, "\n")
 Le nombre de variables sélectionnées est : `r n_selected_rr` pour un seuil de `r round(seuil_rr, 3)` 
 
 ```{r plot_rr_selection}
+
 # Boxplot pour visualiser la sélection
+
 boxplot_df_rr <- data.frame(
   beta_abs = abs(beta_hat_rr),
   selected = abs(beta_hat_rr) > seuil_rr
@@ -299,8 +309,7 @@ Les limites de la sélection obtenue par RR-BLUP motivent l’utilisation de mod
 
 ## 2.0. Rappel théorique
 
-Le modèle **Bayes A** généralise le RR en attribuant une **variance
-spécifique** à chaque coefficient :
+Le modèle *Bayes A* généralise le RR en attribuant une variance spécifique à chaque coefficient :
 
 $$
 \begin{cases}
@@ -313,14 +322,9 @@ Y = \mu \mathbf{1} + X\beta + \epsilon \\
 \end{cases}
 $$
 
-**Avantages** : - Permet à chaque variable d'avoir sa propre importance
-(via $\sigma^2_{\beta_j}$) - Équivalent au **Ridge bayésien** -
-Estimation via **Gibbs sampler**
-
 ## 2.1. Différence avec Random Regression
 
-La différence fondamentale réside dans la **structure de variance des
-coefficients** :
+La différence fondamentale réside dans la *structure de variance des coefficients* :
 
 \begin{table}[ht!]
 \centering
