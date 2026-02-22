@@ -70,6 +70,18 @@ set.seed(2026)
 \newpage
 \listoffigures
 
+<<<<<<< HEAD
+=======
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.cap = " ")
+
+set.seed(2026)
+```
+
+>>>>>>> 480eb41b1689c2a4eeba582cf7ed70e2849e74d1
 \newpage
 
 # Introduction
@@ -307,7 +319,7 @@ Les limites de la sélection obtenue par RR-BLUP motivent l’utilisation de mod
 
 # 2. Bayes A
 
-## 2.0. Rappel théorique
+## Rappel théorique
 
 Le modèle *Bayes A* généralise le RR en attribuant une variance spécifique à chaque coefficient :
 
@@ -322,6 +334,15 @@ Y = \mu \mathbf{1} + X\beta + \epsilon \\
 \end{cases}
 $$
 
+<<<<<<< HEAD
+=======
+**Avantages** :
+
+- Permet à chaque variable d'avoir sa propre importance (via $\sigma^2_{\beta_j}$)
+- Équivalent au **Ridge bayésien**
+- Estimation via **Gibbs sampler**
+
+>>>>>>> 480eb41b1689c2a4eeba582cf7ed70e2849e74d1
 ## 2.1. Différence avec Random Regression
 
 La différence fondamentale réside dans la *structure de variance des coefficients* :
@@ -374,11 +395,11 @@ cat("Variance résiduelle (sigma²_epsilon):", sigma2_e_bayesA, "\n")
 **Comment sont-elles obtenues ?**
 
 Les estimations sont obtenues par **moyennes a posteriori** après la
-période de burn-in : - Après `burnIn` itérations, l'algorithme de Gibbs
-a convergé vers la distribution stationnaire - Les valeurs suivantes
-(post-burn-in) sont des échantillons de la loi a posteriori -
-L'espérance a posteriori $\mathbb{E}[\theta|Y]$ est estimée par la
-moyenne empirique des échantillons
+période de burn-in :
+
+- Après `burnIn` itérations, l'algorithme de Gibbs a convergé vers la distribution stationnaire
+- Les valeurs suivantes (post-burn-in) sont des échantillons de la loi a posteriori
+- L'espérance a posteriori $\mathbb{E}[\theta|Y]$ est estimée par la moyenne empirique des échantillons
 
 $$\hat{\beta}_j = \frac{1}{M} \sum_{m=1}^{M} \beta_j^{(m)}$$
 
@@ -1255,9 +1276,10 @@ ggplot(contour_df, aes(x = beta1, y = beta2, color = Type)) +
   theme(legend.position = "bottom")
 ```
 
-**Géométrie** : - **L1 (LASSO)** : Contrainte en forme de **losange**
-$\to$ solutions aux **sommets** (axes) $\to$ certains $\beta = 0$ - **L2
-(Ridge)** : Contrainte **circulaire** $\to$ solutions rarement sur les
+**Géométrie** :
+
+- **L1 (LASSO)** : Contrainte en forme de **losange** $\to$ solutions aux **sommets** (axes) $\to$ certains $\beta = 0$
+- **L2 (Ridge)** : Contrainte **circulaire** $\to$ solutions rarement sur les
 axes $\to$ tous $\beta \neq 0$
 
 ### 2. Corrélation entre variables
@@ -1428,11 +1450,12 @@ f(\sigma^2_\epsilon) = 1/\sigma^2_\epsilon \\
 $$
 
 **Paramètres clés** :
+
 - $c > 0$ : **coefficient de sélection** (typiquement 10-100)
 - $\pi \in (0,1)$ : **probabilité a priori** de sélectionner une variable
 - $d_\gamma = \sum \gamma_j$ : nombre de variables sélectionnées
 
-**A priori de Zellner** : La structure $c(X'_\gamma X_\gamma)^{-1}$ adapte automatiquement la covariance à la structure des données.
+**a priori de Zellner** : La structure $c(X'_\gamma X_\gamma)^{-1}$ adapte automatiquement la covariance à la structure des données.
 
 ## 4.1 Algorithme d'estimation
 
@@ -1458,6 +1481,7 @@ où $\tilde{Y} = Y - \bar{Y}\mathbf{1}$ (observations centrées).
 La **proposition** est un **noyau symétrique** de type "naissance-mort" :
 
 **À l'itération $t$** :
+
 1. Choisir aléatoirement $r$ positions dans $\gamma^{(t)}$
 2. Inverser ces positions : $1 \to 0$ et $0 \to 1$
 3. Obtenir $\gamma^*$ candidat
@@ -1481,6 +1505,7 @@ $$
 $$
 
 **Avantages de SSVS** :
+
 - Très rapide : on manipule seulement $X_\gamma$ (sous-matrice)
 - Gère haute dimension (génomique, $p \gg n$)
 - Donne une **distribution de probabilité** sur les modèles
@@ -1788,6 +1813,7 @@ $\pi$ & \textbf{Interprétation} & \textbf{Nb. variables sélectionnées} & \tex
 \end{table}
 
 **Recommandation** : 
+
 - Si incertitude sur la vraie dimensionalité : prendre $\pi$ modéré (0.1-0.2)
 - Si on sait qu'il y a peu de vraies variables : $\pi$ faible (0.05)
 
@@ -1808,12 +1834,14 @@ $c$ & \textbf{Interprétation} & \textbf{Effet} & \textbf{Usage} \\ \hline
 Cependant, un $c$ trop grand peut causer des problèmes numériques (instabilité de $(X'_\gamma X_\gamma)^{-1}$)
 
 **Choix optimal dans notre cas** :
+
 - $\pi = 0.1$ : cohérent avec l'idée que ~10-20 chaînes sur 160 sont vraiment influentes
 - $c = 50-100$ : compromis entre précision et stabilité
 
 ## Conclusion SSVS
 
 SSVS offre une approche probabiliste de la sélection de variables :
+
 - Fournit des **fréquences de sélection** plutôt qu'un modèle unique
 - Permet de quantifier l'**incertitude** sur la sélection
 - Très efficace en haute dimension grâce à la manipulation de $X_\gamma$ uniquement
@@ -1837,6 +1865,7 @@ Les quatre méthodes se classent en **deux groupes fondamentaux** :
 | **LASSO Bayésien** | L1 (absolue) | Oui (soft) | Parcimonie via shrinkage fort |
 
 **Caractéristiques communes** :
+
 - Tous les coefficients sont estimés simultanément
 - Réduction continue des coefficients vers zéro
 - Pas de décision binaire "in/out" (sauf LASSO qui peut mettre à 0)
@@ -1849,6 +1878,7 @@ Les quatre méthodes se classent en **deux groupes fondamentaux** :
 | **SSVS** | Recherche stochastique | Oui (hard) | Exploration de l'espace des modèles |
 
 **Caractéristiques** :
+
 - Variable latente binaire $\gamma$ (in/out)
 - Décision discrète sur chaque variable
 - Fournit une **distribution de probabilité** sur les modèles
@@ -2065,16 +2095,19 @@ D'après les statistiques :
 ### 3. Mécanismes expliquant les différences
 
 **RR-BLUP** :
+
 - Pénalité L2 **proportionnelle** : $\lambda \sum \beta_j^2$
 - Réduction homogène de tous les coefficients
 - Pas de discrimination selon la magnitude
 
 **Bayes A** :
+
 - Variances individuelles $\sigma^2_{\beta_j}$
 - Shrinkage **adaptatif** : fort si variance a posteriori faible
 - Compromis entre tous les coefficients
 
 **LASSO Bayésien** :
+
 - Pénalité L1 : $\lambda \sum |\beta_j|$
 - **Seuillage doux** (soft thresholding)
 - Petits coefficients $\to$ 0 exact
@@ -2096,7 +2129,8 @@ kable(ranking_shrinkage,
   kable_styling(latex_options = "hold_position")
 ```
 
-**Important** : Un shrinkage fort n'est pas toujours meilleur !
+Il est important de souligner qu'un shrinkage fort n'est pas toujours meilleur !
+
 - Trop de shrinkage $\to$ sous-ajustement (biais élevé)
 - Pas assez $\to$ sur-ajustement (variance élevée)
 - L'objectif est le **compromis optimal** pour la prédiction
@@ -3126,7 +3160,7 @@ ggplot(comp_plot_df, aes(x = reorder(Méthode, Corrélation), y = Corrélation, 
 | **Besoin de rapidité** | Fréquentiste (glmnet) |
 | **Connaissance a priori** | Bayésien (intégration d'expertise) |
 
-## 5.7 Comparaison des variables sélectionnées (suite)
+## 5.7 Comparaison des variables sélectionnées
 
 ```{r compare_freq_selection}
 # Top 10 des méthodes fréquentistes
