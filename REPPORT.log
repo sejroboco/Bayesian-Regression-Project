@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2023.11.3)  22 FEB 2026 08:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2023.11.3)  22 FEB 2026 13:09
 entering extended mode
 **./REPPORT.tex
 (REPPORT.tex
@@ -1133,9 +1133,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2] (REPPORT.toc)
-\tf@toc=\write4
-\openout4 = `REPPORT.toc'.
+[2] (REPPORT.lot)
+\tf@lot=\write4
+\openout4 = `REPPORT.lot'.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1143,9 +1143,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[3] (REPPORT.lot)
-\tf@lot=\write5
-\openout5 = `REPPORT.lot'.
+[3] (REPPORT.lof)
+\tf@lof=\write5
+\openout5 = `REPPORT.lof'.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1153,10 +1153,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[4] (REPPORT.lof)
-\tf@lof=\write6
-\openout6 = `REPPORT.lof'.
-
+[4]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1164,19 +1161,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[6]
-<REPPORT_files/figure-latex/unnamed-chunk-2-1.pdf, id=234, 469.755pt x 325.215p
+<REPPORT_files/figure-latex/unnamed-chunk-2-1.pdf, id=207, 469.755pt x 325.215p
 t>
 File: REPPORT_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 <use REPPORT_files/figure-latex/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/unnamed-chunk-2-1.pdf  used
- on input line 205.
+ on input line 202.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1184,15 +1174,15 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[7 <./REPPORT_files/figure-latex/unnamed-chunk-2-1.pdf>]
+[6 <./REPPORT_files/figure-latex/unnamed-chunk-2-1.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[8]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 273.
+[7]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 270.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1203,19 +1193,19 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[9]
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 334.
+[8]
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 329.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ts1lmr.fd"
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<REPPORT_files/figure-latex/plot_rr_selection-1.pdf, id=263, 469.755pt x 325.21
+<REPPORT_files/figure-latex/plot_rr_selection-1.pdf, id=236, 469.755pt x 325.21
 5pt>
 File: REPPORT_files/figure-latex/plot_rr_selection-1.pdf Graphic file (type pdf
 )
 <use REPPORT_files/figure-latex/plot_rr_selection-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_rr_selection-1.pdf  us
-ed on input line 345.
+ed on input line 338.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1223,15 +1213,15 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[10]
+[9]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[11 <./REPPORT_files/figure-latex/plot_rr_selection-1.pdf>]
-Overfull \hbox (15.12086pt too wide) in paragraph at lines 389--397
+[10 <./REPPORT_files/figure-latex/plot_rr_selection-1.pdf>]
+Overfull \hbox (15.12086pt too wide) in paragraph at lines 390--398
  [][] 
  []
 
@@ -1241,14 +1231,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[12]
-<REPPORT_files/figure-latex/bayesA_trace_plots-1.pdf, id=292, 469.755pt x 325.2
+[11]
+<REPPORT_files/figure-latex/bayesA_trace_plots-1.pdf, id=265, 469.755pt x 325.2
 15pt>
 File: REPPORT_files/figure-latex/bayesA_trace_plots-1.pdf Graphic file (type pd
 f)
 <use REPPORT_files/figure-latex/bayesA_trace_plots-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/bayesA_trace_plots-1.pdf  u
-sed on input line 464.
+sed on input line 456.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1256,14 +1246,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[13 <./REPPORT_files/figure-latex/bayesA_trace_plots-1.pdf>]
-<REPPORT_files/figure-latex/bayesA_prior_plot-1.pdf, id=312, 469.755pt x 325.21
+[12 <./REPPORT_files/figure-latex/bayesA_trace_plots-1.pdf>]
+<REPPORT_files/figure-latex/bayesA_prior_plot-1.pdf, id=281, 469.755pt x 325.21
 5pt>
 File: REPPORT_files/figure-latex/bayesA_prior_plot-1.pdf Graphic file (type pdf
 )
 <use REPPORT_files/figure-latex/bayesA_prior_plot-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/bayesA_prior_plot-1.pdf  us
-ed on input line 502.
+ed on input line 490.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1271,14 +1261,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[14 <./REPPORT_files/figure-latex/bayesA_prior_plot-1.pdf>]
-<REPPORT_files/figure-latex/plot_bayesA_predictions-1.pdf, id=326, 469.755pt x 
+[13 <./REPPORT_files/figure-latex/bayesA_prior_plot-1.pdf>]
+<REPPORT_files/figure-latex/plot_bayesA_predictions-1.pdf, id=298, 469.755pt x 
 325.215pt>
 File: REPPORT_files/figure-latex/plot_bayesA_predictions-1.pdf Graphic file (ty
 pe pdf)
 <use REPPORT_files/figure-latex/plot_bayesA_predictions-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_bayesA_predictions-1.p
-df  used on input line 556.
+df  used on input line 544.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1286,14 +1276,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[15 <./REPPORT_files/figure-latex/plot_bayesA_predictions-1.pdf>]
-<REPPORT_files/figure-latex/plot_bayesA_selection-1.pdf, id=343, 469.755pt x 32
+[14 <./REPPORT_files/figure-latex/plot_bayesA_predictions-1.pdf>]
+<REPPORT_files/figure-latex/plot_bayesA_selection-1.pdf, id=314, 469.755pt x 32
 5.215pt>
 File: REPPORT_files/figure-latex/plot_bayesA_selection-1.pdf Graphic file (type
  pdf)
 <use REPPORT_files/figure-latex/plot_bayesA_selection-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_bayesA_selection-1.pdf
-  used on input line 644.
+  used on input line 627.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1301,14 +1291,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[16]
-<REPPORT_files/figure-latex/plot_selection_by_type_bayesA-1.pdf, id=348, 469.75
+[15]
+<REPPORT_files/figure-latex/plot_selection_by_type_bayesA-1.pdf, id=321, 469.75
 5pt x 325.215pt>
 File: REPPORT_files/figure-latex/plot_selection_by_type_bayesA-1.pdf Graphic fi
 le (type pdf)
 <use REPPORT_files/figure-latex/plot_selection_by_type_bayesA-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_selection_by_type_baye
-sA-1.pdf  used on input line 665.
+sA-1.pdf  used on input line 648.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1316,21 +1306,21 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[17 <./REPPORT_files/figure-latex/plot_bayesA_selection-1.pdf>]
+[16 <./REPPORT_files/figure-latex/plot_bayesA_selection-1.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[18 <./REPPORT_files/figure-latex/plot_selection_by_type_bayesA-1.pdf>]
-<REPPORT_files/figure-latex/prior_comparison-1.pdf, id=379, 469.755pt x 325.215
+[17 <./REPPORT_files/figure-latex/plot_selection_by_type_bayesA-1.pdf>]
+<REPPORT_files/figure-latex/prior_comparison-1.pdf, id=352, 469.755pt x 325.215
 pt>
 File: REPPORT_files/figure-latex/prior_comparison-1.pdf Graphic file (type pdf)
 
 <use REPPORT_files/figure-latex/prior_comparison-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/prior_comparison-1.pdf  use
-d on input line 779.
+d on input line 762.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1338,20 +1328,20 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[19]
+[18]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[20 <./REPPORT_files/figure-latex/prior_comparison-1.pdf>]
-<REPPORT_files/figure-latex/plot_lasso_beta-1.pdf, id=396, 469.755pt x 325.215p
+[19 <./REPPORT_files/figure-latex/prior_comparison-1.pdf>]
+<REPPORT_files/figure-latex/plot_lasso_beta-1.pdf, id=369, 469.755pt x 325.215p
 t>
 File: REPPORT_files/figure-latex/plot_lasso_beta-1.pdf Graphic file (type pdf)
 <use REPPORT_files/figure-latex/plot_lasso_beta-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_lasso_beta-1.pdf  used
- on input line 904.
+ on input line 887.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1359,14 +1349,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[21]
-<REPPORT_files/figure-latex/prior_posterior_comparison-1.pdf, id=405, 469.755pt
+[20]
+<REPPORT_files/figure-latex/prior_posterior_comparison-1.pdf, id=378, 469.755pt
  x 325.215pt>
 File: REPPORT_files/figure-latex/prior_posterior_comparison-1.pdf Graphic file 
 (type pdf)
 <use REPPORT_files/figure-latex/prior_posterior_comparison-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/prior_posterior_comparison-
-1.pdf  used on input line 912.
+1.pdf  used on input line 895.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1374,21 +1364,21 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[22 <./REPPORT_files/figure-latex/plot_lasso_beta-1.pdf>]
+[21 <./REPPORT_files/figure-latex/plot_lasso_beta-1.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[23 <./REPPORT_files/figure-latex/prior_posterior_comparison-1.pdf>]
-<REPPORT_files/figure-latex/plot_all_predictions-1.pdf, id=436, 469.755pt x 325
+[22 <./REPPORT_files/figure-latex/prior_posterior_comparison-1.pdf>]
+<REPPORT_files/figure-latex/plot_all_predictions-1.pdf, id=409, 469.755pt x 325
 .215pt>
 File: REPPORT_files/figure-latex/plot_all_predictions-1.pdf Graphic file (type 
 pdf)
 <use REPPORT_files/figure-latex/plot_all_predictions-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_all_predictions-1.pdf 
- used on input line 994.
+ used on input line 977.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1396,18 +1386,18 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[24 <./REPPORT_files/figure-latex/plot_all_predictions-1.pdf>]
-Overfull \hbox (11.41579pt too wide) in alignment at lines 1038--1055
+[23 <./REPPORT_files/figure-latex/plot_all_predictions-1.pdf>]
+Overfull \hbox (11.41579pt too wide) in alignment at lines 1021--1038
  [] [] [] [] [] [] [] 
  []
 
-<REPPORT_files/figure-latex/plot_selection_comparison-1.pdf, id=450, 469.755pt 
+<REPPORT_files/figure-latex/plot_selection_comparison-1.pdf, id=423, 469.755pt 
 x 325.215pt>
 File: REPPORT_files/figure-latex/plot_selection_comparison-1.pdf Graphic file (
 type pdf)
 <use REPPORT_files/figure-latex/plot_selection_comparison-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_selection_comparison-1
-.pdf  used on input line 1057.
+.pdf  used on input line 1040.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1415,14 +1405,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[25 <./REPPORT_files/figure-latex/plot_selection_comparison-1.pdf>]
-<REPPORT_files/figure-latex/geometry_illustration-1.pdf, id=462, 469.755pt x 32
+[24 <./REPPORT_files/figure-latex/plot_selection_comparison-1.pdf>]
+<REPPORT_files/figure-latex/geometry_illustration-1.pdf, id=434, 469.755pt x 32
 5.215pt>
 File: REPPORT_files/figure-latex/geometry_illustration-1.pdf Graphic file (type
  pdf)
 <use REPPORT_files/figure-latex/geometry_illustration-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/geometry_illustration-1.pdf
-  used on input line 1100.
+  used on input line 1083.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1430,11 +1420,18 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[26 <./REPPORT_files/figure-latex/geometry_illustration-1.pdf>]
-Overfull \hbox (11.8557pt too wide) in paragraph at lines 1146--1153
+[25 <./REPPORT_files/figure-latex/geometry_illustration-1.pdf>]
+Overfull \hbox (11.8557pt too wide) in paragraph at lines 1135--1142
  [][] 
  []
 
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[26]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1449,6 +1446,22 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [28]
+<REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf, id=482, 469.755pt x 32
+5.215pt>
+File: REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf Graphic file (type
+ pdf)
+<use REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf
+  used on input line 1416.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<REPPORT_files/figure-latex/ssvs_trace_example-1.pdf, id=483, 469.755pt x 325.2
+15pt>
+File: REPPORT_files/figure-latex/ssvs_trace_example-1.pdf Graphic file (type pd
+f)
+<use REPPORT_files/figure-latex/ssvs_trace_example-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/ssvs_trace_example-1.pdf  u
+sed on input line 1418.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1462,37 +1475,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[30]
-<REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf, id=517, 469.755pt x 32
-5.215pt>
-File: REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf Graphic file (type
- pdf)
-<use REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf
-  used on input line 1450.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<REPPORT_files/figure-latex/ssvs_trace_example-1.pdf, id=518, 469.755pt x 325.2
-15pt>
-File: REPPORT_files/figure-latex/ssvs_trace_example-1.pdf Graphic file (type pd
-f)
-<use REPPORT_files/figure-latex/ssvs_trace_example-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/ssvs_trace_example-1.pdf  u
-sed on input line 1452.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[31 <./REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf>]
-<REPPORT_files/figure-latex/plot_sensitivity-1.pdf, id=533, 469.755pt x 325.215
+[30 <./REPPORT_files/figure-latex/plot_ssvs_frequencies-1.pdf>]
+<REPPORT_files/figure-latex/plot_sensitivity-1.pdf, id=508, 469.755pt x 325.215
 pt>
 File: REPPORT_files/figure-latex/plot_sensitivity-1.pdf Graphic file (type pdf)
 
 <use REPPORT_files/figure-latex/plot_sensitivity-1.pdf>
 Package pdftex.def Info: REPPORT_files/figure-latex/plot_sensitivity-1.pdf  use
-d on input line 1487.
+d on input line 1453.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1500,13 +1490,13 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[32 <./REPPORT_files/figure-latex/ssvs_trace_example-1.pdf>]
-Overfull \hbox (49.46521pt too wide) in paragraph at lines 1496--1503
+[31 <./REPPORT_files/figure-latex/ssvs_trace_example-1.pdf>]
+Overfull \hbox (49.46521pt too wide) in paragraph at lines 1462--1469
  [][] 
  []
 
 
-Overfull \hbox (21.96657pt too wide) in paragraph at lines 1515--1522
+Overfull \hbox (21.96657pt too wide) in paragraph at lines 1488--1495
  [][] 
  []
 
@@ -1516,7 +1506,23 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[33 <./REPPORT_files/figure-latex/plot_sensitivity-1.pdf>]
+[32 <./REPPORT_files/figure-latex/plot_sensitivity-1.pdf>]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 1549--1549
+\T1/lmr/m/n/10.95 (+20) vari-ances in-di-vidu-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1550--1550
+[]|\T1/lmr/m/n/10.95 (+20) Parcimonie via
+ []
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1524,10 +1530,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [34]
-Overfull \hbox (200.27664pt too wide) in alignment at lines 1621--1631
- [] [] [] [] [] [] 
- []
-
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1535,17 +1537,20 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [35]
-Overfull \hbox (139.35167pt too wide) in alignment at lines 1654--1663
- [] [] [] [] [] [] [] 
- []
 
-<REPPORT_files/figure-latex/plot_shrinkage_comparison-1.pdf, id=574, 469.755pt 
-x 325.215pt>
-File: REPPORT_files/figure-latex/plot_shrinkage_comparison-1.pdf Graphic file (
-type pdf)
-<use REPPORT_files/figure-latex/plot_shrinkage_comparison-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_shrinkage_comparison-1
-.pdf  used on input line 1665.
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[36]
+<REPPORT_files/figure-latex/venn_diagram_concept-1.pdf, id=565, 469.755pt x 325
+.215pt>
+File: REPPORT_files/figure-latex/venn_diagram_concept-1.pdf Graphic file (type 
+pdf)
+<use REPPORT_files/figure-latex/venn_diagram_concept-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/venn_diagram_concept-1.pdf 
+ used on input line 1878.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1553,41 +1558,32 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[36 <./REPPORT_files/figure-latex/plot_shrinkage_comparison-1.pdf>]
-<REPPORT_files/figure-latex/plot_shrinkage_by_category-1.pdf, id=588, 469.755pt
- x 325.215pt>
-File: REPPORT_files/figure-latex/plot_shrinkage_by_category-1.pdf Graphic file 
-(type pdf)
-<use REPPORT_files/figure-latex/plot_shrinkage_by_category-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_shrinkage_by_category-
-1.pdf  used on input line 1677.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[37]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[37 <./REPPORT_files/figure-latex/plot_shrinkage_by_category-1.pdf>]
-Overfull \hbox (11.49316pt too wide) in alignment at lines 1787--1796
+[38 <./REPPORT_files/figure-latex/venn_diagram_concept-1.pdf>]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[39]
+Overfull \hbox (29.80429pt too wide) in alignment at lines 2004--2012
  [] [] [] [] [] [] [] [] 
  []
 
-<REPPORT_files/figure-latex/plot_performance_metrics-1.pdf, id=602, 469.755pt x
- 325.215pt>
-File: REPPORT_files/figure-latex/plot_performance_metrics-1.pdf Graphic file (t
-ype pdf)
-<use REPPORT_files/figure-latex/plot_performance_metrics-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_performance_metrics-1.
-pdf  used on input line 1798.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<REPPORT_files/figure-latex/residuals_analysis-1.pdf, id=603, 469.755pt x 325.2
-15pt>
-File: REPPORT_files/figure-latex/residuals_analysis-1.pdf Graphic file (type pd
-f)
-<use REPPORT_files/figure-latex/residuals_analysis-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/residuals_analysis-1.pdf  u
-sed on input line 1800.
+<REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf, id=592, 469.755pt 
+x 325.215pt>
+File: REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf Graphic file (
+type pdf)
+<use REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/plot_confidence_intervals-1
+.pdf  used on input line 2032.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1595,28 +1591,15 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[38]
-<REPPORT_files/figure-latex/qq_plots-1.pdf, id=611, 469.755pt x 325.215pt>
-File: REPPORT_files/figure-latex/qq_plots-1.pdf Graphic file (type pdf)
-<use REPPORT_files/figure-latex/qq_plots-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/qq_plots-1.pdf  used on inp
-ut line 1802.
+[40 <./REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf>]
+<REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf, id=602, 469.755pt x 32
+5.215pt>
+File: REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf Graphic file (type
+ pdf)
+<use REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf
+  used on input line 2102.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[39 <./REPPORT_files/figure-latex/plot_performance_metrics-1.pdf> <./REPPORT_fi
-les/figure-latex/residuals_analysis-1.pdf>]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[40 <./REPPORT_files/figure-latex/qq_plots-1.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1624,13 +1607,20 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [41]
-<REPPORT_files/figure-latex/venn_diagram_concept-1.pdf, id=650, 469.755pt x 325
-.215pt>
-File: REPPORT_files/figure-latex/venn_diagram_concept-1.pdf Graphic file (type 
-pdf)
-<use REPPORT_files/figure-latex/venn_diagram_concept-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/venn_diagram_concept-1.pdf 
- used on input line 1945.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[42 <./REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf>]
+<REPPORT_files/figure-latex/plot_final_predictions-1.pdf, id=630, 469.755pt x 3
+25.215pt>
+File: REPPORT_files/figure-latex/plot_final_predictions-1.pdf Graphic file (typ
+e pdf)
+<use REPPORT_files/figure-latex/plot_final_predictions-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/plot_final_predictions-1.pd
+f  used on input line 2233.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1638,14 +1628,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[42 <./REPPORT_files/figure-latex/venn_diagram_concept-1.pdf>]
-<REPPORT_files/figure-latex/plot_channel_distribution-1.pdf, id=660, 469.755pt 
-x 325.215pt>
-File: REPPORT_files/figure-latex/plot_channel_distribution-1.pdf Graphic file (
-type pdf)
-<use REPPORT_files/figure-latex/plot_channel_distribution-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_channel_distribution-1
-.pdf  used on input line 1965.
+[43]
+<REPPORT_files/figure-latex/plot_coefficients-1.pdf, id=636, 469.755pt x 325.21
+5pt>
+File: REPPORT_files/figure-latex/plot_coefficients-1.pdf Graphic file (type pdf
+)
+<use REPPORT_files/figure-latex/plot_coefficients-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/plot_coefficients-1.pdf  us
+ed on input line 2249.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1653,45 +1643,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[43 <./REPPORT_files/figure-latex/plot_channel_distribution-1.pdf>]
-Overfull \hbox (86.82079pt too wide) in alignment at lines 2073--2081
- [] [] [] [] [] [] [] [] [] 
- []
+[44 <./REPPORT_files/figure-latex/plot_final_predictions-1.pdf>]
+<REPPORT_files/figure-latex/diagnostic_plots-1.pdf, id=651, 469.755pt x 325.215
+pt>
+File: REPPORT_files/figure-latex/diagnostic_plots-1.pdf Graphic file (type pdf)
 
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[44]
-<REPPORT_files/figure-latex/plot_consensus_coefficients-1.pdf, id=682, 469.755p
-t x 325.215pt>
-File: REPPORT_files/figure-latex/plot_consensus_coefficients-1.pdf Graphic file
- (type pdf)
-<use REPPORT_files/figure-latex/plot_consensus_coefficients-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_consensus_coefficients
--1.pdf  used on input line 2098.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Overfull \hbox (262.59982pt too wide) in alignment at lines 2103--2119
- [] [] [] [] [] [] [] [] [] [] [] 
- []
-
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[45 <./REPPORT_files/figure-latex/plot_consensus_coefficients-1.pdf>]
-<REPPORT_files/figure-latex/plot_selection_rate_by_type-1.pdf, id=693, 469.755p
-t x 325.215pt>
-File: REPPORT_files/figure-latex/plot_selection_rate_by_type-1.pdf Graphic file
- (type pdf)
-<use REPPORT_files/figure-latex/plot_selection_rate_by_type-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_selection_rate_by_type
--1.pdf  used on input line 2121.
+<use REPPORT_files/figure-latex/diagnostic_plots-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/diagnostic_plots-1.pdf  use
+d on input line 2263.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1699,15 +1658,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[46 <./REPPORT_files/figure-latex/plot_selection_rate_by_type-1.pdf>]
-<REPPORT_files/figure-latex/plot_correlation_heatmap-1.pdf, id=703, 469.755pt x
- 325.215pt>
-File: REPPORT_files/figure-latex/plot_correlation_heatmap-1.pdf Graphic file (t
-ype pdf)
-<use REPPORT_files/figure-latex/plot_correlation_heatmap-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_correlation_heatmap-1.
-pdf  used on input line 2202.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[45 <./REPPORT_files/figure-latex/plot_coefficients-1.pdf>]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[46 <./REPPORT_files/figure-latex/diagnostic_plots-1.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1721,12 +1679,24 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[48 <./REPPORT_files/figure-latex/plot_correlation_heatmap-1.pdf>]
-Overfull \hbox (154.87163pt too wide) in paragraph at lines 2284--2284
-[]\T1/lmtt/m/n/10.95 ## Liste : Film.13, Film.16, Serie.1, Serie.2, Serie.3, Se
-rie.5, Serie.6, Serie.14, Serie.18, Science.19, Divers.5[] 
+[48]
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 251
+4.
+("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ts1lmtt.fd"
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Overfull \hbox (93.81589pt too wide) in alignment at lines 2518--2526
+ [] [] [] [] [] [] [] 
  []
 
+<REPPORT_files/figure-latex/plot_abc_distributions-1.pdf, id=691, 469.755pt x 3
+25.215pt>
+File: REPPORT_files/figure-latex/plot_abc_distributions-1.pdf Graphic file (typ
+e pdf)
+<use REPPORT_files/figure-latex/plot_abc_distributions-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/plot_abc_distributions-1.pd
+f  used on input line 2528.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1734,13 +1704,24 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [49]
-<REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf, id=734, 469.755pt 
-x 325.215pt>
-File: REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf Graphic file (
-type pdf)
-<use REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_confidence_intervals-1
-.pdf  used on input line 2376.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[50 <./REPPORT_files/figure-latex/plot_abc_distributions-1.pdf>]
+Overfull \hbox (23.93047pt too wide) in alignment at lines 2608--2617
+ [] [] [] [] [] [] 
+ []
+
+<REPPORT_files/figure-latex/plot_comparison_methods-1.pdf, id=719, 469.755pt x 
+325.215pt>
+File: REPPORT_files/figure-latex/plot_comparison_methods-1.pdf Graphic file (ty
+pe pdf)
+<use REPPORT_files/figure-latex/plot_comparison_methods-1.pdf>
+Package pdftex.def Info: REPPORT_files/figure-latex/plot_comparison_methods-1.p
+df  used on input line 2619.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1748,22 +1729,26 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[50 <./REPPORT_files/figure-latex/plot_confidence_intervals-1.pdf>]
-<REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf, id=747, 469.755pt x 32
-5.215pt>
-File: REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf Graphic file (type
- pdf)
-<use REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf
-  used on input line 2449.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[51 <./REPPORT_files/figure-latex/plot_comparison_methods-1.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 2652--2654
 
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
+ []
 
-[51 <./REPPORT_files/figure-latex/plot_bayesian_vs_freq-1.pdf>]
+
+Underfull \hbox (badness 10000) in paragraph at lines 2654--2657
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2665--2668
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2668--2670
+
+ []
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1771,19 +1756,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [52]
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 259
-0.
-("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ts1lmtt.fd"
-File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-<REPPORT_files/figure-latex/plot_final_predictions-1.pdf, id=774, 469.755pt x 3
-25.215pt>
-File: REPPORT_files/figure-latex/plot_final_predictions-1.pdf Graphic file (typ
-e pdf)
-<use REPPORT_files/figure-latex/plot_final_predictions-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_final_predictions-1.pd
-f  used on input line 2628.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1791,154 +1763,41 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [53]
-Underfull \vbox (badness 10000) detected at line 2677
- []
-
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[54 <./REPPORT_files/figure-latex/plot_final_predictions-1.pdf>]
-<REPPORT_files/figure-latex/plot_coefficients-1.pdf, id=795, 469.755pt x 325.21
-5pt>
-File: REPPORT_files/figure-latex/plot_coefficients-1.pdf Graphic file (type pdf
-)
-<use REPPORT_files/figure-latex/plot_coefficients-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_coefficients-1.pdf  us
-ed on input line 2679.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[54]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[55 <./REPPORT_files/figure-latex/plot_coefficients-1.pdf>]
-<REPPORT_files/figure-latex/diagnostic_plots-1.pdf, id=808, 469.755pt x 325.215
-pt>
-File: REPPORT_files/figure-latex/diagnostic_plots-1.pdf Graphic file (type pdf)
-
-<use REPPORT_files/figure-latex/diagnostic_plots-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/diagnostic_plots-1.pdf  use
-d on input line 2716.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[55]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3012.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[56 <./REPPORT_files/figure-latex/diagnostic_plots-1.pdf>]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[57]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[58]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[59]
-Overfull \hbox (93.81589pt too wide) in alignment at lines 2969--2977
- [] [] [] [] [] [] [] 
- []
-
-<REPPORT_files/figure-latex/plot_abc_distributions-1.pdf, id=843, 469.755pt x 3
-25.215pt>
-File: REPPORT_files/figure-latex/plot_abc_distributions-1.pdf Graphic file (typ
-e pdf)
-<use REPPORT_files/figure-latex/plot_abc_distributions-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_abc_distributions-1.pd
-f  used on input line 2979.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[60]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[61 <./REPPORT_files/figure-latex/plot_abc_distributions-1.pdf>]
-Overfull \hbox (23.93047pt too wide) in alignment at lines 3059--3068
- [] [] [] [] [] [] 
- []
-
-<REPPORT_files/figure-latex/plot_comparison_methods-1.pdf, id=869, 469.755pt x 
-325.215pt>
-File: REPPORT_files/figure-latex/plot_comparison_methods-1.pdf Graphic file (ty
-pe pdf)
-<use REPPORT_files/figure-latex/plot_comparison_methods-1.pdf>
-Package pdftex.def Info: REPPORT_files/figure-latex/plot_comparison_methods-1.p
-df  used on input line 3070.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[62 <./REPPORT_files/figure-latex/plot_comparison_methods-1.pdf>]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[63]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[64]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[65]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3394.
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[66]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3394.
+[56]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3012.
 (REPPORT.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3394.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3394.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3012.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3012.
  ) 
 Here is how much of TeX's memory you used:
- 15880 strings out of 493308
- 233555 string characters out of 3138777
- 357927 words of memory out of 3000000
- 18673 multiletter control sequences out of 15000+200000
- 66175 words of font info for 102 fonts, out of 3000000 for 9000
+ 15746 strings out of 493308
+ 229584 string characters out of 3138777
+ 352506 words of memory out of 3000000
+ 18603 multiletter control sequences out of 15000+200000
+ 65594 words of font info for 95 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,13n,43p,787b,472s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,13n,43p,787b,474s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Fil
 es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Program Files/MiKTeX 2.9/fonts/
 enc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-r
@@ -1957,9 +1816,9 @@ gram Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/lm/lmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
 ublic/lm/lmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on REPPORT.pdf (66 pages, 1018483 bytes).
+Output written on REPPORT.pdf (56 pages, 923122 bytes).
 PDF statistics:
- 1237 PDF objects out of 1440 (max. 8388607)
- 339 named destinations out of 1000 (max. 500000)
- 10843 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 1084 PDF objects out of 1200 (max. 8388607)
+ 300 named destinations out of 1000 (max. 500000)
+ 10798 words of extra memory for PDF output out of 12000 (max. 10000000)
 

@@ -50,7 +50,8 @@ header-includes:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,
                       warning = FALSE,
-                      message = FALSE)
+                      message = FALSE,
+                      fig.cap = " ")
 
 set.seed(2026)
 ```
@@ -62,26 +63,11 @@ set.seed(2026)
 \renewcommand{\contentsname}{Table des matières}
 
 \newpage
-\tableofcontents
-
-\newpage
 \listoftables
 
 \newpage
 \listoffigures
 
-<<<<<<< HEAD
-=======
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      warning = FALSE,
-                      message = FALSE,
-                      fig.cap = " ")
-
-set.seed(2026)
-```
-
->>>>>>> 480eb41b1689c2a4eeba582cf7ed70e2849e74d1
 \newpage
 
 # Introduction
@@ -265,8 +251,10 @@ La méthode RR-BLUP ne réalise pas de sélection de variables au sens strict : 
 
 Deux approches complémentaires sont possibles :
 
-+ Analyse visuelle à l’aide d’un boxplot des coefficients estimés ;
-+ Sélection par seuillage, en retenant les coefficients dont la valeur absolue dépasse un certain quantile élevé de la distribution.
+\begin{itemize}
+\item Analyse visuelle à l’aide d’un boxplot des coefficients estimés ;
+\item Sélection par seuillage, en retenant les coefficients dont la valeur absolue dépasse un certain quantile élevé de la distribution.
+\end{itemize}
 
 Ces méthodes permettent d’identifier un petit nombre de variables susceptibles d’avoir un impact important sur le score de satisfaction.
 
@@ -334,15 +322,13 @@ Y = \mu \mathbf{1} + X\beta + \epsilon \\
 \end{cases}
 $$
 
-<<<<<<< HEAD
-=======
 **Avantages** :
+\begin{itemize}
+\item Permet à chaque variable d'avoir sa propre importance (via $\sigma^2_{\beta_j}$)
+\item Équivalent au **Ridge bayésien**
+\item Estimation via **Gibbs sampler**
+\end{itemize}
 
-- Permet à chaque variable d'avoir sa propre importance (via $\sigma^2_{\beta_j}$)
-- Équivalent au **Ridge bayésien**
-- Estimation via **Gibbs sampler**
-
->>>>>>> 480eb41b1689c2a4eeba582cf7ed70e2849e74d1
 ## 2.1. Différence avec Random Regression
 
 La différence fondamentale réside dans la *structure de variance des coefficients* :
@@ -362,8 +348,10 @@ Méthode d'estimation & REML (analytique) & Gibbs sampler (MCMC) \\ \hline
 
 **Avantage de Bayes A** :
 
-+ *Adaptabilité* : Les variables importantes peuvent avoir de grandes variances (peu de shrinkage), tandis que les variables non informatives sont fortement pénalisées ;
-+ *Réalisme* : Il est peu plausible que toutes les chaînes aient la même influence.
+\begin{itemize}
+\item *Adaptabilité* : Les variables importantes peuvent avoir de grandes variances (peu de shrinkage), tandis que les variables non informatives sont fortement pénalisées ;
+\item *Réalisme* : Il est peu plausible que toutes les chaînes aient la même influence.
+\end{itemize}
 
 ## 2.2 Estimation des paramètres
 
@@ -397,9 +385,11 @@ cat("Variance résiduelle (sigma²_epsilon):", sigma2_e_bayesA, "\n")
 Les estimations sont obtenues par **moyennes a posteriori** après la
 période de burn-in :
 
-- Après `burnIn` itérations, l'algorithme de Gibbs a convergé vers la distribution stationnaire
-- Les valeurs suivantes (post-burn-in) sont des échantillons de la loi a posteriori
-- L'espérance a posteriori $\mathbb{E}[\theta|Y]$ est estimée par la moyenne empirique des échantillons
+\begin{itemize}
+\item Après `burnIn` itérations, l'algorithme de Gibbs a convergé vers la distribution stationnaire
+\item Les valeurs suivantes (post-burn-in) sont des échantillons de la loi a posteriori
+\item L'espérance a posteriori $\mathbb{E}[\theta|Y]$ est estimée par la moyenne empirique des échantillons
+\end{itemize}
 
 $$\hat{\beta}_j = \frac{1}{M} \sum_{m=1}^{M} \beta_j^{(m)}$$
 
@@ -422,9 +412,11 @@ Le burn-in est crucial pour trois raisons :
 
 **Recommandation** :
 
-- Minimum : 10-20% du total d'itérations ;
-- Notre choix : `burnIn = 2000` sur `nIter = 12000` $\approx$ 16.7% ;
-- En pratique : observer les traces pour s'assurer de la convergence.
+\begin{itemize}
+\item Minimum : 10-20% du total d'itérations ;
+\item Notre choix : `burnIn = 2000` sur `nIter = 12000` $\approx$ 16.7% ;
+\item En pratique : observer les traces pour s'assurer de la convergence.
+\end{itemize}
 
 ## 2.4 Diagnostic de convergence
 
@@ -472,9 +464,11 @@ Les trajectoires post-burn-in nous renseignent sur :
 
 **Critères visuels** :
 
-- Pas de tendance croissante/décroissante
-- Variance stable tout le long de la chaîne
-- Pas de "plateaux" (blocage de la chaîne)
+\begin{itemize}
+\item Pas de tendance croissante/décroissante
+\item Variance stable tout le long de la chaîne
+\item Pas de "plateaux" (blocage de la chaîne)
+\end{itemize}
 
 ## 2.5 Choix des hyperparamètres
 
@@ -575,9 +569,11 @@ ggplot(combined_preds, aes(x = Observed, y = Predicted, color = Model)) +
 
 Le modèle Bayes A apporte une **amélioration spectaculaire** par rapport à RR-BLUP :
 
-- **Corrélation** : 0.899 vs 0.122 (+678% !)
-- **$R^2$** : 0.808 vs 0.015 (le modèle explique désormais 81% de la variance)
-- **RMSE** : 5.37 vs 10.84 (-50%)
+\begin{itemize}
+\item **Corrélation** : 0.899 vs 0.122 (+678% !)
+\item **$R^2$** : 0.808 vs 0.015 (le modèle explique désormais 81% de la variance)
+\item **RMSE** : 5.37 vs 10.84 (-50%)
+\end{itemize}
 
 Cette performance remarquable s'explique par trois mécanismes clés :
 
@@ -787,7 +783,7 @@ Type de pénalité & L2 : $\sum \beta_j^2$ & L1 : $\sum |\beta_j|$ \\ \hline
 Effet de shrinkage & Proportionnel (réduction homogène) & Sélection : force vers zéro exact \\ \hline
 Sélection de variables & Non (tous les $\beta_j \neq 0$) & Oui (certains $\beta = 0$ exactement) \\ \hline
 Hiérarchie & 1 niveau : $\sigma^2_{\beta_j}$ & 2 niveaux : $\tau_j$ puis $\lambda$ \\ \hline
-Densité & Pic moins prononcé en 0 & **Pic en 0** (favorise parcimonie) \\ \hline
+Densité & Pic moins prononcé en 0 & Pic en 0 (favorise parcimonie) \\ \hline
 \end{tabular}
 \caption{Différences conceptuelles entre Bayes A et Lasso Bayésien}
 \end{table}
@@ -1512,7 +1508,7 @@ $$
 
 ## 4.2 Sélection de variables
 
-```{r ssvs_function}
+```{r ssvs_function, results='hide'}
 # Fonction SSVS (à adapter selon votre code TP)
 # Ici on donne la structure générale
 
@@ -1611,7 +1607,7 @@ selection_SSVS <- function(Y, X, nIter = 10000, burnIn = 2000,
 }
 ```
 
-```{r ssvs_estimation}
+```{r ssvs_estimation, results='hide'}
 # Application de SSVS
 set.seed(123)
 
@@ -1638,7 +1634,7 @@ ssvs_result <- selection_SSVS(
 selection_freq_ssvs <- ssvs_result$selection_freq
 ```
 
-```{r ssvs_results}
+```{r ssvs_results, results='hide'}
 # Statistiques de sélection
 summary_freq <- summary(selection_freq_ssvs)
 cat("Statistiques des fréquences de sélection :\n")
@@ -1681,7 +1677,7 @@ ggplot(freq_df_ssvs, aes(x = index, y = frequency, color = selected)) +
   theme(legend.position = "bottom")
 ```
 
-```{r ssvs_trace_example}
+```{r ssvs_trace_example, results='hide'}
 # Trace de quelques gamma (évolution de la sélection)
 # Sélection de 4 variables : 2 souvent sélectionnées, 2 rarement
 
@@ -1858,11 +1854,16 @@ Les quatre méthodes se classent en **deux groupes fondamentaux** :
 
 ### Groupe 1 : Méthodes de SHRINKAGE (Régularisation continue)
 
-| Méthode | Type de pénalité | Sélection exacte ? | Philosophie |
-|---------|------------------|-------------------|-------------|
-| **RR-BLUP** | Aucune (variance commune) | Non | Régression ridge la plus simple |
-| **Bayes A** | L2 (quadratique) | Non | Ridge bayésien avec variances individuelles |
-| **LASSO Bayésien** | L1 (absolue) | Oui (soft) | Parcimonie via shrinkage fort |
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|c|c|c|p{3.5cm}|}
+\hline
+\textbf{Méthode} & \textbf{Type de pénalité} & \textbf{Sélection exacte ?} & \textbf{Philosophie} \\ \hline
+RR-BLUP & Aucune (variance commune) & Non & Régression ridge la plus simple \\ \hline
+Bayes A & L2 (quadratique) & Non & Ridge bayésien avec variances individuelles \\ \hline
+LASSO Bayésien & L1 (absolue) & Oui (soft) & Parcimonie via shrinkage fort \\ \hline
+\end{tabular}
+\end{table}
 
 **Caractéristiques communes** :
 
@@ -1873,9 +1874,14 @@ Les quatre méthodes se classent en **deux groupes fondamentaux** :
 
 ### Groupe 2 : Méthodes de SÉLECTION (Choix discret de variables)
 
-| Méthode | Approche | Sélection exacte ? | Philosophie |
-|---------|----------|-------------------|-------------|
-| **SSVS** | Recherche stochastique | Oui (hard) | Exploration de l'espace des modèles |
+\begin{table}[ht!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Méthode} & \textbf{Approche} & \textbf{Sélection exacte ?} & \textbf{Philosophie} \\ \hline
+SSVS & Recherche stochastique & Oui (hard) & Exploration de l'espace des modèles \\ \hline
+\end{tabular}
+\end{table}
 
 **Caractéristiques** :
 
@@ -1884,189 +1890,7 @@ Les quatre méthodes se classent en **deux groupes fondamentaux** :
 - Fournit une **distribution de probabilité** sur les modèles
 - Estimation via Metropolis-Hastings
 
-### Visualisation de la classification
-
-```{r method_classification}
-# Tableau de synthèse
-classification_df <- data.frame(
-  Méthode = c("RR-BLUP", "Bayes A", "LASSO Bayésien", "SSVS"),
-  Groupe = c("Shrinkage", "Shrinkage", "Shrinkage (+ sélection soft)", "Sélection"),
-  Type_pénalité = c("Aucune", "L2 (Ridge)", "L1 (LASSO)", "Indicatrice"),
-  Sélection_exacte = c("Non", "Non", "Partielle", "Oui"),
-  Algorithme = c("REML", "Gibbs", "Gibbs", "Metropolis-Hastings"),
-  Hyperparamètres = c(
-    "0",
-    "$\\sigma^2_{\\beta_j}$ (p)",
-    "$\\lambda^2$, $\\tau_j$ (p+1)",
-    "$\\pi$, c, $\\gamma$"
-  )
-)
-
-kable(classification_df,
-      caption = "Classification des quatre méthodes bayésiennes",
-      escape = FALSE) %>%   # IMPORTANT pour rendre le LaTeX
-  kable_styling(latex_options = c("hold_position", "scale_down")) %>%
-  column_spec(2, bold = TRUE)
-```
-
-**Analogie avec les méthodes fréquentistes** :
-
-```{r frequentist_analogy}
-analogy_df <- data.frame(
-  Méthode_Bayésienne = c("RR-BLUP", "Bayes A", "LASSO Bayésien", "SSVS"),
-  Équivalent_Fréquentiste = c(
-    "Régression Ridge simple",
-    "Ridge avec pénalités adaptatives",
-    "LASSO pénalisé",
-    "Stepwise / Best Subset Selection"
-  ),
-  Avantage_Bayésien = c(
-    "Quantification d'incertitude",
-    "Pénalités données-dépendantes",
-    "Distribution complète des $\\beta$",
-    "Probabilités de sélection"
-  )
-)
-
-kable(analogy_df,
-      caption = "Analogies avec les méthodes fréquentistes") %>%
-  kable_styling(latex_options = "hold_position")
-```
-
 ## 5.2 Comparaison de l'effet de shrinkage
-
-**Question** : En examinant les résultats obtenus avec RR-BLUP, Bayes A et LASSO bayésien, y a-t-il une méthode où l'effet « shrinkage » est plus prononcé ?
-
-```{r shrinkage_comparison}
-# Compilation des coefficients des 3 méthodes
-shrinkage_df <- data.frame(
-  Index = 1:length(beta_hat_rr),
-  RR_BLUP = beta_hat_rr,
-  Bayes_A = beta_hat_bayesA,
-  LASSO = beta_hat_lasso
-)
-
-# Statistiques de shrinkage
-shrinkage_stats <- data.frame(
-  Méthode = c("RR-BLUP", "Bayes A", "LASSO Bayésien"),
-  Moyenne_abs_beta = c(
-    mean(abs(beta_hat_rr)),
-    mean(abs(beta_hat_bayesA)),
-    mean(abs(beta_hat_lasso))
-  ),
-  Mediane_abs_beta = c(
-    median(abs(beta_hat_rr)),
-    median(abs(beta_hat_bayesA)),
-    median(abs(beta_hat_lasso))
-  ),
-  Ecart_type = c(
-    sd(beta_hat_rr),
-    sd(beta_hat_bayesA),
-    sd(beta_hat_lasso)
-  ),
-  Max_abs_beta = c(
-    max(abs(beta_hat_rr)),
-    max(abs(beta_hat_bayesA)),
-    max(abs(beta_hat_lasso))
-  ),
-  Nb_quasi_nuls = c(
-    sum(abs(beta_hat_rr) < 0.01),
-    sum(abs(beta_hat_bayesA) < 0.01),
-    sum(abs(beta_hat_lasso) < 0.01)
-  )
-)
-
-shrinkage_stats$Rang_Shrinkage <- rank(shrinkage_stats$Moyenne_abs_beta)
-
-kable(shrinkage_stats, digits = 4,
-      caption = "Comparaison quantitative du shrinkage") %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-```{r plot_shrinkage_comparison}
-# Boxplot comparatif
-shrinkage_long <- data.frame(
-  beta = c(beta_hat_rr, beta_hat_bayesA, beta_hat_lasso),
-  Méthode = rep(c("RR-BLUP", "Bayes A", "LASSO"), each = length(beta_hat_rr))
-)
-
-p1 <- ggplot(shrinkage_long, aes(x = Méthode, y = abs(beta), fill = Méthode)) +
-  geom_boxplot() +
-  scale_y_log10() +
-  labs(title = "Distribution des coefficients (valeur absolue)",
-       subtitle = "Échelle logarithmique",
-       y = expression("|" * beta * "|")
-      )+
-  theme_minimal() +
-  theme(legend.position = "none")
-
-# Densité des coefficients
-p2 <- ggplot(shrinkage_long, aes(x = beta, fill = Méthode)) +
-  geom_density(alpha = 0.5) +
-  xlim(c(-0.5, 0.5)) +
-  labs(title = "Densité des coefficients (zoom sur [-0.5, 0.5])",
-       x = expression(beta), y = "Densité") +
-  theme_minimal() +
-  theme(legend.position = "bottom")
-
-gridExtra::grid.arrange(p1, p2, ncol = 1)
-```
-
-```{r shrinkage_by_magnitude}
-# Analyse par catégorie de magnitude (grands, moyens, petits coefficients)
-# Référence : coefficients OLS (sans pénalité) - simulation
-ols_model <- lm(y_train ~ X_train - 1)  # Sans intercept car déjà dans mu
-beta_ols <- coef(ols_model)
-
-# Catégorisation selon |beta_OLS|
-categories <- cut(abs(beta_ols), 
-                  breaks = c(0, 0.05, 0.15, Inf),
-                  labels = c("Petit", "Moyen", "Grand"))
-
-shrinkage_by_category <- data.frame(
-  Catégorie = categories,
-  OLS = beta_ols,
-  RR_BLUP = beta_hat_rr,
-  Bayes_A = beta_hat_bayesA,
-  LASSO = beta_hat_lasso
-)
-
-# Calcul du ratio de shrinkage : |beta_méthode| / |beta_OLS|
-shrinkage_by_category$Ratio_RR <- abs(beta_hat_rr) / (abs(beta_ols) + 1e-8)
-shrinkage_by_category$Ratio_BayesA <- abs(beta_hat_bayesA) / (abs(beta_ols) + 1e-8)
-shrinkage_by_category$Ratio_LASSO <- abs(beta_hat_lasso) / (abs(beta_ols) + 1e-8)
-
-# Moyenne par catégorie
-shrinkage_summary <- shrinkage_by_category %>%
-  group_by(Catégorie) %>%
-  summarise(
-    RR_BLUP_ratio = mean(Ratio_RR, na.rm = TRUE),
-    Bayes_A_ratio = mean(Ratio_BayesA, na.rm = TRUE),
-    LASSO_ratio = mean(Ratio_LASSO, na.rm = TRUE),
-    .groups = "drop"
-  )
-
-kable(shrinkage_summary, digits = 3,
-      caption = "Ratio de shrinkage moyen par catégorie de coefficient (vs OLS)") %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-```{r plot_shrinkage_by_category}
-# Visualisation
-shrinkage_summary_long <- shrinkage_summary %>%
-  pivot_longer(cols = -Catégorie, names_to = "Méthode", values_to = "Ratio") %>%
-  mutate(Méthode = gsub("_ratio", "", Méthode))
-
-ggplot(shrinkage_summary_long, aes(x = Catégorie, y = Ratio, fill = Méthode)) +
-  geom_col(position = "dodge") +
-  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +
-  labs(title = "Ratio de shrinkage par catégorie de coefficient",
-       subtitle = expression("Ratio = " * "|" * beta[method] * "|" / "|" * beta[OLS] * "|" * " (1 = pas de shrinkage)"),
-       y = "Ratio moyen",
-       x = "Catégorie (magnitude OLS)") +
-  theme_minimal() +
-  theme(legend.position = "bottom")
-```
 
 **Interprétation de l'effet de shrinkage** :
 
@@ -2135,9 +1959,8 @@ Il est important de souligner qu'un shrinkage fort n'est pas toujours meilleur !
 - Pas assez $\to$ sur-ajustement (variance élevée)
 - L'objectif est le **compromis optimal** pour la prédiction
 
-## 5.3 Comparaison des performances prédictives
 
-**Question** : À l'aide des corrélations entre valeurs prédites et observées, comparez ces trois méthodes.
+## 5.3 Comparaison des performances prédictives
 
 ```{r prediction_performance}
 # Calcul des métriques de performance supplémentaires
@@ -2171,66 +1994,9 @@ performance_df <- data.frame(
   MSE = c(mse_rr, mse_bayesA, mse_lasso)
 )
 
-performance_df$Rang_Corrélation <- rank(-performance_df$Corrélation)
-performance_df$Rang_RMSE <- rank(performance_df$RMSE)
-
 kable(performance_df, digits = 4,
       caption = "Comparaison complète des performances prédictives") %>%
   kable_styling(latex_options = c("hold_position", "scale_down"))
-```
-
-```{r plot_performance_metrics}
-# Graphique en radar des performances
-# (normalisation pour avoir des échelles comparables)
-performance_norm <- performance_df %>%
-  mutate(
-    Corr_norm = (Corrélation - min(Corrélation)) / (max(Corrélation) - min(Corrélation)),
-    R2_norm = (R2 - min(R2)) / (max(R2) - min(R2)),
-    RMSE_norm = 1 - (RMSE - min(RMSE)) / (max(RMSE) - min(RMSE)),  # Inversé (petit = bon)
-    MAE_norm = 1 - (MAE - min(MAE)) / (max(MAE) - min(MAE))  # Inversé
-  ) %>%
-  select(Méthode, Corr_norm, R2_norm, RMSE_norm, MAE_norm) %>%
-  pivot_longer(cols = -Méthode, names_to = "Métrique", values_to = "Score")
-
-ggplot(performance_norm, aes(x = Métrique, y = Score, fill = Méthode)) +
-  geom_col(position = "dodge") +
-  labs(title = "Comparaison des métriques de performance (normalisées)",
-       subtitle = "Score = 1 : meilleure performance",
-       y = "Score normalisé") +
-  theme_minimal() +
-  theme(legend.position = "bottom")
-```
-
-```{r residuals_analysis}
-# Analyse des résidus
-residuals_df <- data.frame(
-  Observed = rep(y_test, 3),
-  Residual = c(y_test - y_pred_rr, y_test - y_pred_bayesA, y_test - y_pred_lasso),
-  Méthode = rep(c("RR-BLUP", "Bayes A", "LASSO"), each = length(y_test))
-)
-
-# Distribution des résidus
-ggplot(residuals_df, aes(x = Residual, fill = Méthode)) +
-  geom_histogram(bins = 15, alpha = 0.7, position = "identity") +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
-  facet_wrap(~Méthode, ncol = 1) +
-  labs(title = "Distribution des résidus par méthode",
-       x = "Résidu (Observé - Prédit)",
-       y = "Fréquence") +
-  theme_minimal() +
-  theme(legend.position = "none")
-```
-
-```{r qq_plots}
-# QQ-plots pour normalité des résidus
-par(mfrow = c(1, 3))
-qqnorm(y_test - y_pred_rr, main = "QQ-Plot RR-BLUP")
-qqline(y_test - y_pred_rr, col = "red")
-qqnorm(y_test - y_pred_bayesA, main = "QQ-Plot Bayes A")
-qqline(y_test - y_pred_bayesA, col = "red")
-qqnorm(y_test - y_pred_lasso, main = "QQ-Plot LASSO")
-qqline(y_test - y_pred_lasso, col = "red")
-par(mfrow = c(1, 1))
 ```
 
 **Analyse des performances prédictives** :
@@ -2257,7 +2023,7 @@ performance_df$Écart_RMSE_pct <-
 
 kable(performance_df %>% select(Méthode, Corrélation, Écart_Cor_pct, RMSE, Écart_RMSE_pct),
       digits = 2,
-      col.names = c("Méthode", "Corrélation", "Écart (%)", "RMSE", "Écart (%)"),
+      col.names = c("Méthode", "Corrélation", "Écart relatif (%)", "RMSE", "Écart (%)"),
       caption = "Écarts relatifs par rapport à la meilleure méthode") %>%
   kable_styling(latex_options = "hold_position")
 ```
@@ -2276,31 +2042,6 @@ kable(performance_df %>% select(Méthode, Corrélation, Écart_Cor_pct, RMSE, É
    - L'information est distribuée sur beaucoup de variables
    - Le shrinkage adaptatif capture mieux la complexité
 
-### 3. Qualité des résidus
-
-```{r residuals_stats}
-library(moments) # Pour skewness et kurtosis
-
-residuals_stats <- residuals_df %>%
-  group_by(Méthode) %>%
-  summarise(
-    Moyenne = mean(Residual),
-    Écart_type = sd(Residual),
-    Skewness = moments::skewness(Residual),
-    Kurtosis = moments::kurtosis(Residual),
-    .groups = "drop"
-  )
-
-kable(residuals_stats, digits = 3,
-      caption = "Statistiques des résidus") %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-**Critères de qualité des résidus** :
-  - Moyenne $\approx$ 0 (modèle non biaisé)
-  - Distribution symétrique (skewness $\approx$ 0)
-  - Pas de queues trop lourdes (kurtosis $\approx$ 3)
-
 ### 4. Conclusion sur les performances
 
 ```{r, results='asis'}
@@ -2315,13 +2056,12 @@ cat(glue("Les trois méthodes sont **compétitives**, avec des performances {per
 ```
 
 **Recommandation** :
+
   - **Pour la prédiction** : choisir la méthode avec la meilleure corrélation
-  - **Pour l'interprétation** : préférer LASSO (parcimonie) ou SSVS (probabilités)
+  - **Pour l'interprétation** : préférer LSSO (parcimonie) ou SSVS (probabilités)
   - **Pour la robustesse** : Bayes A (gère mieux les corrélations)
 
 ## 5.4 Comparaison des variables sélectionnées
-
-**Question** : Comparez les variables retenues avec les quatre méthodes : RR-BLUP, LASSO bayésien, Bayes A et SSVS.
 
 ```{r variable_selection_comparison}
 # Compilation des sélections (top 15 pour avoir plus de recul)
@@ -2379,6 +2119,7 @@ overlap_counts <- data.frame(
 ggplot(overlap_counts, aes(x = Recouvrement, y = Nombre, fill = Recouvrement)) +
   geom_col() +
   geom_text(aes(label = Nombre), vjust = -0.5, size = 5) +
+  ylim(c(0, 16)) +
   labs(title = "Consensus entre méthodes",
        subtitle = "Nombre de variables selon le nombre de méthodes qui les sélectionnent",
        y = "Nombre de variables") +
@@ -2418,21 +2159,6 @@ channel_summary <- data.frame(
 kable(channel_summary,
       caption = "Répartition des variables sélectionnées par type de chaîne et méthode") %>%
   kable_styling(latex_options = "hold_position")
-```
-
-```{r plot_channel_distribution}
-# Visualisation
-channel_long <- channel_summary %>%
-  pivot_longer(cols = -Type, names_to = "Méthode", values_to = "Count")
-
-ggplot(channel_long, aes(x = Type, y = Count, fill = Méthode)) +
-  geom_col(position = "dodge") +
-  labs(title = "Distribution des variables sélectionnées par type de chaîne",
-       x = "Type de chaîne",
-       y = "Nombre de variables (top 15)") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "bottom")
 ```
 
 **Analyse de la sélection de variables** :
@@ -2545,10 +2271,6 @@ if(nrow(consensus_4) > 0) {
   consensus_coef_comparison$Mean_Beta <- rowMeans(
     consensus_coef_comparison[, c("Beta_RR", "Beta_BayesA", "Beta_LASSO")]
   )
-  consensus_coef_comparison$SD_Beta <- apply(
-    consensus_coef_comparison[, c("Beta_RR", "Beta_BayesA", "Beta_LASSO")],
-    1, sd
-  )
   
   kable(consensus_coef_comparison, digits = 4,
         caption = "Coefficients détaillés des variables consensus (4 méthodes)") %>%
@@ -2562,385 +2284,7 @@ if(nrow(consensus_4) > 0) {
 - **Variabilité entre méthodes** : Un faible écart-type indique un accord fort sur la magnitude
 - **Fréquence SSVS** : Une fréquence proche de 1 confirme la sélection avec haute certitude
 
-```{r plot_consensus_coefficients}
-if(nrow(consensus_4) > 0 && nrow(consensus_4) <= 15) {
-  # Graphique uniquement si pas trop de variables
-  consensus_coef_long <- consensus_coef_comparison %>%
-    select(Variable, Beta_RR, Beta_BayesA, Beta_LASSO) %>%
-    pivot_longer(cols = -Variable, names_to = "Méthode", values_to = "Coefficient") %>%
-    mutate(Méthode = gsub("Beta_", "", Méthode))
-  
-  ggplot(consensus_coef_long, aes(x = Variable, y = Coefficient, color = Méthode, group = Méthode)) +
-    geom_point(size = 3) +
-    geom_line() +
-    geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-    coord_flip() +
-    labs(title = "Comparaison des coefficients pour les variables consensus",
-         subtitle = "Variables sélectionnées par les 4 méthodes",
-         x = "",
-         y = "Valeur du coefficient") +
-    theme_minimal() +
-    theme(legend.position = "bottom")
-}
-```
-
-### 4. Analyse par type de chaîne (détaillée)
-
-```{r channel_type_detailed_analysis}
-# Pour chaque méthode, comptage par type
-selection_by_type_detailed <- data.frame(
-  Type = unique(extract_channel_type(colnames(X))),
-  stringsAsFactors = FALSE
-)
-
-# Ajout du nombre total de variables de chaque type
-total_by_type <- table(extract_channel_type(colnames(X)))
-selection_by_type_detailed$Total_disponible <- 
-  total_by_type[match(selection_by_type_detailed$Type, names(total_by_type))]
-
-# Comptage pour chaque méthode
-for(method_name in c("RR", "BayesA", "LASSO", "SSVS")) {
-  if(method_name == "RR") {
-    selected_vars <- colnames(X)[top_15_rr]
-  } else if(method_name == "BayesA") {
-    selected_vars <- colnames(X)[top_15_bayesA]
-  } else if(method_name == "LASSO") {
-    selected_vars <- colnames(X)[top_15_lasso]
-  } else {
-    selected_vars <- colnames(X)[top_15_ssvs]
-  }
-  
-  types_selected <- extract_channel_type(selected_vars)
-  count_by_type <- table(types_selected)
-  
-  selection_by_type_detailed[[paste0("N_", method_name)]] <- 
-    count_by_type[match(selection_by_type_detailed$Type, names(count_by_type))]
-  
-  # Remplacer NA par 0
-  selection_by_type_detailed[[paste0("N_", method_name)]][
-    is.na(selection_by_type_detailed[[paste0("N_", method_name)]])
-  ] <- 0
-  
-  # Pourcentage de sélection
-  selection_by_type_detailed[[paste0("Pct_", method_name)]] <- 
-    round(100 * selection_by_type_detailed[[paste0("N_", method_name)]] / 
-            selection_by_type_detailed$Total_disponible, 1)
-}
-
-# Calcul du taux de sélection moyen
-selection_by_type_detailed$Taux_selection_moyen <- rowMeans(
-  selection_by_type_detailed[, c("Pct_RR", "Pct_BayesA", "Pct_LASSO", "Pct_SSVS")],
-  na.rm = TRUE
-)
-
-# Tri par taux de sélection décroissant
-selection_by_type_detailed <- selection_by_type_detailed %>%
-  arrange(desc(Taux_selection_moyen))
-
-kable(selection_by_type_detailed, digits = 1,
-      caption = "Analyse détaillée par type de chaîne : taux de sélection par méthode") %>%
-  kable_styling(latex_options = c("hold_position", "scale_down", "striped"))
-```
-
-```{r plot_selection_rate_by_type}
-# Graphique des taux de sélection
-selection_rate_long <- selection_by_type_detailed %>%
-  select(Type, Pct_RR, Pct_BayesA, Pct_LASSO, Pct_SSVS) %>%
-  pivot_longer(cols = -Type, names_to = "Méthode", values_to = "Taux_pct") %>%
-  mutate(Méthode = gsub("Pct_", "", Méthode))
-
-ggplot(selection_rate_long, aes(x = reorder(Type, -Taux_pct, FUN = mean), 
-                                  y = Taux_pct, fill = Méthode)) +
-  geom_col(position = "dodge") +
-  labs(title = "Taux de sélection par type de chaîne et méthode",
-       subtitle = "Pourcentage de variables sélectionnées (sur top 15) par rapport au total disponible",
-       x = "Type de chaîne",
-       y = "Taux de sélection (%)") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "bottom")
-```
-
-**Interprétation métier des types de chaînes** :
-
-```{r interpret_channel_types}
-# Identification des types sur-représentés et sous-représentés
-top_types <- head(selection_by_type_detailed, 3)
-bottom_types <- tail(selection_by_type_detailed, 3)
-
-cat("=== TYPES DE CHAÎNES LES PLUS SÉLECTIONNÉS ===\n\n")
-for(i in 1:nrow(top_types)) {
-  cat(paste0(i, ". ", top_types$Type[i], " : ", 
-             round(top_types$Taux_selection_moyen[i], 1), "% en moyenne\n"))
-  cat(paste0("   (", top_types$Total_disponible[i], 
-             " chaînes disponibles)\n\n"))
-}
-
-cat("\n=== TYPES DE CHAÎNES LES MOINS SÉLECTIONNÉS ===\n\n")
-for(i in 1:nrow(bottom_types)) {
-  cat(paste0(i, ". ", bottom_types$Type[i], " : ", 
-             round(bottom_types$Taux_selection_moyen[i], 1), "% en moyenne\n"))
-  cat(paste0("   (", bottom_types$Total_disponible[i], 
-             " chaînes disponibles)\n\n"))
-}
-```
-
-**Recommandations basées sur les types** :
-
-1. **Types à fort impact positif** : 
-   - Augmenter l'offre dans ces catégories
-   - Négocier l'acquisition de nouvelles chaînes similaires
-   - Mettre en avant dans l'interface utilisateur
-
-2. **Types à faible sélection** :
-   - Évaluer la qualité du contenu
-   - Possibilité de réduire l'offre dans ces catégories
-   - Réallouer le budget vers les catégories performantes
-
-### 5. Matrice de corrélation entre sélections
-
-```{r correlation_selections}
-# Matrice binaire : 1 si variable dans top 15, 0 sinon
-selection_binary <- matrix(0, nrow = ncol(X_train), ncol = 4)
-colnames(selection_binary) <- c("RR_BLUP", "Bayes_A", "LASSO", "SSVS")
-rownames(selection_binary) <- colnames(X)
-
-selection_binary[top_15_rr, "RR_BLUP"] <- 1
-selection_binary[top_15_bayesA, "Bayes_A"] <- 1
-selection_binary[top_15_lasso, "LASSO"] <- 1
-selection_binary[top_15_ssvs, "SSVS"] <- 1
-
-# Corrélation entre les sélections
-cor_selections <- cor(selection_binary)
-
-kable(cor_selections, digits = 3,
-      caption = "Corrélation entre les sélections de variables des 4 méthodes") %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-```{r plot_correlation_heatmap}
-# Heatmap de corrélation
-library(reshape2)
-cor_selections_melted <- melt(cor_selections)
-
-ggplot(cor_selections_melted, aes(x = Var1, y = Var2, fill = value)) +
-  geom_tile(color = "white") +
-  geom_text(aes(label = round(value, 2)), size = 5) +
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
-                       midpoint = 0.5, limit = c(0, 1)) +
-  labs(title = "Corrélation entre les sélections de variables",
-       subtitle = "1 = accord parfait, 0 = aucun recouvrement",
-       x = "", y = "", fill = "Corrélation") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
-**Interprétation des corrélations** :
-
-- **Corrélation élevée (> 0.7)** : Les méthodes identifient des variables similaires $\to$ signal robuste
-- **Corrélation moyenne (0.4-0.7)** : Accord partiel, chaque méthode capture des aspects différents
-- **Corrélation faible (< 0.4)** : Désaccord substantiel $\to$ sensibilité aux hypothèses
-
-```{r pairwise_agreement}
-# Calcul des accords deux à deux (coefficient de Jaccard)
-jaccard_similarity <- function(set1, set2) {
-  intersection <- length(intersect(set1, set2))
-  union <- length(union(set1, set2))
-  return(intersection / union)
-}
-
-pairs <- combn(c("RR", "BayesA", "LASSO", "SSVS"), 2)
-jaccard_results <- data.frame(
-  Paire = apply(pairs, 2, function(x) paste(x, collapse = " vs ")),
-  Jaccard = apply(pairs, 2, function(x) {
-    set1 <- switch(x[1],
-                   "RR" = top_15_rr,
-                   "BayesA" = top_15_bayesA,
-                   "LASSO" = top_15_lasso,
-                   "SSVS" = top_15_ssvs)
-    set2 <- switch(x[2],
-                   "RR" = top_15_rr,
-                   "BayesA" = top_15_bayesA,
-                   "LASSO" = top_15_lasso,
-                   "SSVS" = top_15_ssvs)
-    jaccard_similarity(set1, set2)
-  })
-)
-
-jaccard_results <- jaccard_results %>% arrange(desc(Jaccard))
-
-kable(jaccard_results, digits = 3,
-      caption = "Similarité de Jaccard entre les sélections (sur top 15)") %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-**Coefficient de Jaccard** : mesure la similarité entre deux ensembles
-
-- **Formule** : $J(A, B) = \frac{|A \cap B|}{|A \cup B|}$
-- **Interprétation** : 
-  
-  - 1 = ensembles identiques
-  - 0 = aucune variable en commun
-  - > 0.5 = forte similarité
-
-### 6. Variables spécifiques à chaque méthode
-
-```{r method_specific_variables}
-# Variables UNIQUEMENT sélectionnées par chaque méthode
-only_rr <- setdiff(top_15_rr, c(top_15_bayesA, top_15_lasso, top_15_ssvs))
-only_bayesA <- setdiff(top_15_bayesA, c(top_15_rr, top_15_lasso, top_15_ssvs))
-only_lasso <- setdiff(top_15_lasso, c(top_15_rr, top_15_bayesA, top_15_ssvs))
-only_ssvs <- setdiff(top_15_ssvs, c(top_15_rr, top_15_bayesA, top_15_lasso))
-
-cat("=== VARIABLES SPÉCIFIQUES À CHAQUE MÉTHODE ===\n\n")
-
-cat("Variables uniquement sélectionnées par RR-BLUP :", length(only_rr), "\n")
-if(length(only_rr) > 0) {
-  cat("Liste :", paste(colnames(X)[only_rr], collapse = ", "), "\n\n")
-}
-
-cat("Variables uniquement sélectionnées par Bayes A :", length(only_bayesA), "\n")
-if(length(only_bayesA) > 0) {
-  cat("Liste :", paste(colnames(X)[only_bayesA], collapse = ", "), "\n\n")
-}
-
-cat("Variables uniquement sélectionnées par LASSO :", length(only_lasso), "\n")
-if(length(only_lasso) > 0) {
-  cat("Liste :", paste(colnames(X)[only_lasso], collapse = ", "), "\n\n")
-}
-
-cat("Variables uniquement sélectionnées par SSVS :", length(only_ssvs), "\n")
-if(length(only_ssvs) > 0) {
-  cat("Liste :", paste(colnames(X)[only_ssvs], collapse = ", "), "\n\n")
-}
-```
-
-```{r analyze_specific_variables}
-# Analyse des caractéristiques des variables spécifiques
-if(length(only_lasso) > 0) {
-  cat("\n=== ANALYSE DES VARIABLES SPÉCIFIQUES AU LASSO ===\n\n")
-  
-  # Ces variables ont probablement des corrélations avec d'autres
-  # ou des effets faibles que seul LASSO détecte grâce à sa parcimonie
-  
-  specific_lasso_analysis <- data.frame(
-    Variable = colnames(X)[only_lasso],
-    Beta_LASSO = beta_hat_lasso[only_lasso],
-    Beta_RR = beta_hat_rr[only_lasso],
-    Beta_BayesA = beta_hat_bayesA[only_lasso],
-    Freq_SSVS = selection_freq_ssvs[only_lasso]
-  )
-  
-  kable(specific_lasso_analysis, digits = 4,
-        caption = "Variables spécifiques au LASSO : comparaison avec autres méthodes") %>%
-    kable_styling(latex_options = "hold_position")
-  
-  cat("\nHypothèses possibles :\n")
-  cat("- Effet de sélection L1 : LASSO choisit ces variables dans un groupe corrélé\n")
-  cat("- Shrinkage fort : autres méthodes les ont trop pénalisées\n")
-  cat("- Sensibilité aux hyperparamètres : choix de $\\lambda$ favorable\n")
-}
-```
-
-### 7. Synthèse visuelle : diagramme d'upset
-
-```{r upset_plot_concept}
-# Diagramme conceptuel de recouvrement (alternative au Venn à 4 ensembles)
-# Comptage de toutes les combinaisons possibles
-
-combinations <- expand.grid(
-  RR = c(FALSE, TRUE),
-  BayesA = c(FALSE, TRUE),
-  LASSO = c(FALSE, TRUE),
-  SSVS = c(FALSE, TRUE)
-)
-combinations <- combinations[rowSums(combinations) > 0, ]  # Exclure (0,0,0,0)
-
-combinations$Count <- 0
-combinations$Variables <- vector("list", nrow(combinations))
-
-for(i in 1:nrow(combinations)) {
-  selected_indices <- c()
-  
-  if(combinations$RR[i]) selected_indices <- c(selected_indices, top_15_rr)
-  if(combinations$BayesA[i]) selected_indices <- c(selected_indices, top_15_bayesA)
-  if(combinations$LASSO[i]) selected_indices <- c(selected_indices, top_15_lasso)
-  if(combinations$SSVS[i]) selected_indices <- c(selected_indices, top_15_ssvs)
-  
-  # Variables présentes dans TOUTES les méthodes sélectionnées
-  if(combinations$RR[i]) {
-    candidates <- top_15_rr
-  } else if(combinations$BayesA[i]) {
-    candidates <- top_15_bayesA
-  } else if(combinations$LASSO[i]) {
-    candidates <- top_15_lasso
-  } else {
-    candidates <- top_15_ssvs
-  }
-  
-  # Filtrer pour avoir uniquement cette combinaison exacte
-  for(var in candidates) {
-    in_rr <- var %in% top_15_rr
-    in_bayesA <- var %in% top_15_bayesA
-    in_lasso <- var %in% top_15_lasso
-    in_ssvs <- var %in% top_15_ssvs
-    
-    if(in_rr == combinations$RR[i] && 
-       in_bayesA == combinations$BayesA[i] &&
-       in_lasso == combinations$LASSO[i] &&
-       in_ssvs == combinations$SSVS[i]) {
-      combinations$Count[i] <- combinations$Count[i] + 1
-    }
-  }
-}
-
-# Affichage des combinaisons non vides
-combinations_display <- combinations %>%
-  filter(Count > 0) %>%
-  mutate(
-    Combinaison = paste(
-      ifelse(RR, "RR", ""),
-      ifelse(BayesA, "BA", ""),
-      ifelse(LASSO, "LA", ""),
-      ifelse(SSVS, "SS", ""),
-      sep = "-"
-    )
-  ) %>%
-  arrange(desc(Count)) %>%
-  select(Combinaison, Count)
-
-kable(head(combinations_display, 10), 
-      caption = "Top 10 des combinaisons de sélection (RR=RR-BLUP, BA=Bayes A, LA=LASSO, SS=SSVS)") %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-### 8. Conclusion de l'analyse 5.4
-
-**Points clés de la comparaison des sélections** :
-
-1. **Consensus fort** : `r sum(selection_matrix$Nb_Méthodes == 4)` variables identifiées par les 4 méthodes
-   - Ces variables sont **hautement fiables** et devraient être prioritaires
-
-2. **Convergence partielle** : `r sum(selection_matrix$Nb_Méthodes >= 3)` variables retenues par au moins 3 méthodes
-   - Signal robuste malgré des différences méthodologiques
-
-3. **Diversité des sélections** : Corrélation moyenne entre méthodes $\approx$ `r round(mean(cor_selections[lower.tri(cor_selections)]), 2)`
-   - Chaque méthode apporte une perspective complémentaire
-
-4. **Types de contenu dominants** : 
-   - Les chaînes de type **`r selection_by_type_detailed$Type[1]`** sont les plus sélectionnées
-   - Taux de sélection moyen : **`r round(selection_by_type_detailed$Taux_selection_moyen[1], 1)`%**
-
-5. **Variables spécifiques** :
-   - LASSO : `r length(only_lasso)` variables uniques (effet de parcimonie L1)
-   - SSVS : `r length(only_ssvs)` variables uniques (exploration stochastique)
-   - Bayes A : `r length(only_bayesA)` variables uniques (shrinkage adaptatif)
-
-**Recommandation finale** : Utiliser les **variables consensus** comme base du modèle final, complétées éventuellement par quelques variables spécifiques selon l'objectif (parcimonie vs exhaustivité).
-
 ## 5.5 Intervalles de confiance a posteriori
-
-**Question** : Comparez les intervalles de confiance a posteriori des paramètres les plus importants.
 
 ```{r posterior_intervals}
 # Sélection des 5 variables les plus consensus
@@ -3028,8 +2372,6 @@ ggplot(ic_data, aes(x = Variable, y = Estimate, color = Méthode)) +
    - IC disjoints $\to$ désaccord substantiel (à investiguer)
    
 ## 5.6 Comparaison avec méthodes pénalisées non-bayésiennes
-
-**Question** : Utilisez une méthode de régression pénalisée non bayésienne (LASSO, Ridge ou ElasticNet).
 
 ```{r glmnet_models}
 # Chargement de glmnet (déjà fait normalement)
@@ -3134,7 +2476,7 @@ ggplot(comp_plot_df, aes(x = reorder(Méthode, Corrélation), y = Corrélation, 
 ### 1. Performances prédictives
 
 - **Meilleure méthode globale** : `r comp_plot_df$Méthode[1]`
-- Les approches bayésiennes sont `r ifelse(mean(all_methods_comp$Corrélation[1:3], na.rm=TRUE) > mean(all_methods_comp$Corrélation[5:7]), "légèrement supérieures", "comparables")` aux fréquentistes
+- Les approches bayésiennes sont en moyenne`r ifelse(mean(all_methods_comp$Corrélation[1:3], na.rm=TRUE) > mean(all_methods_comp$Corrélation[5:7]), "légèrement supérieures", "comparables")` aux fréquentistes
 
 ### 2. Avantages des méthodes bayésiennes
 
@@ -3149,16 +2491,6 @@ ggplot(comp_plot_df, aes(x = reorder(Méthode, Corrélation), y = Corrélation, 
 2. **Simplicité** : un seul hyperparamètre $\lambda$ à tuner (CV automatique)
 3. **Robustesse** : moins sensible aux spécifications (pas de choix d'a priori)
 4. **Solution unique** : pas de variabilité MCMC
-
-### 4. Quand préférer quoi ?
-
-| Situation | Recommandation |
-|-----------|----------------|
-| **n >> p** (beaucoup de données) | Fréquentiste (plus rapide, performances similaires) |
-| **p >> n** (haute dimension) | Bayésien (meilleure régularisation) ou LASSO fréq. |
-| **Incertitude importante** | Bayésien (quantification complète) |
-| **Besoin de rapidité** | Fréquentiste (glmnet) |
-| **Connaissance a priori** | Bayésien (intégration d'expertise) |
 
 ## 5.7 Comparaison des variables sélectionnées
 
@@ -3193,7 +2525,8 @@ if(length(ultra_consensus) > 0) {
 
 **Conclusion sur la sélection** :
 
-Les `r length(ultra_consensus)` variables ultra-consensus constituent le **cœur robuste** du modèle :
+Les `r length(ultra_consensus)` variables ultra-consensus constituent le **cœur robuste** du modèle
+
 - Identifiées par bayésien ET fréquentiste
 - Très haute confiance dans leur pertinence
 - Devraient être **prioritaires** dans toute modélisation
@@ -3225,7 +2558,7 @@ X_test_final <- X_test[, final_vars_indices]
 final_model <- lm(y_train ~ ., data = data.frame(y_train, X_train_final))
 ```
 
-```{r final_model_summary}
+```{r final_model_summary, results='hide'}
 # Résumé du modèle
 summary_final <- summary(final_model)
 cat("\n=== RÉSUMÉ DU MODÈLE FINAL ===\n")
@@ -3289,7 +2622,7 @@ ggplot(pred_final_df, aes(x = Observed, y = Predicted)) +
 
 ## 5.9 Analyse du modèle final
 
-```{r rebuild_coef_df}
+```{r rebuild_coef_df, results="hide"}
 # Reconstruction de coef_df pour les analyses suivantes
 
 summary_final <- summary(final_model)
@@ -3309,7 +2642,7 @@ coef_df$Variable[coef_df$Variable == "(Intercept)"] <- "Intercept"
 
 ### 1. Significativité des coefficients
 
-```{r significant_vars}
+```{r significant_vars, results='hide'}
 # Variables significatives
 sig_vars <- coef_df %>%
   filter(p_value < 0.05, Variable != "(Intercept)") %>%
@@ -3329,7 +2662,7 @@ kable(sig_vars, digits = 4,
 
 ### 2. Effet des variables (coefficients)
 
-```{r coefficient_interpretation}
+```{r coefficient_interpretation, results='hide'}
 # Classement par magnitude
 coef_ranked <- coef_df %>%
   filter(Variable != "(Intercept)") %>%
@@ -3369,7 +2702,7 @@ if(nrow(positive_vars) > 0) {
 }
 ```
 
-Les variables à **effet négatif** (coefficient < 0) diminuent la satisfaction :
+<!-- Les variables à **effet négatif** (coefficient < 0) diminuent la satisfaction : -->
 ```{r negative_effects}
 negative_vars <- coef_ranked %>% filter(Estimate < 0, p_value < 0.05)
 if(nrow(negative_vars) > 0) {
@@ -3380,7 +2713,7 @@ if(nrow(negative_vars) > 0) {
 
 ### 3. Analyse des résidus
 
-```{r residuals_final}
+```{r residuals_final, results='hide'}
 # Extraction des résidus
 residuals_final <- residuals(final_model)
 
@@ -3461,8 +2794,6 @@ kable(final_comparison, digits = 4,
 
 ## 5.10 Recommandations pour la chaîne câblée
 
-**Question** : En conclusion, que pouvez-vous proposer à la chaîne de programmes pour améliorer les scores de satisfaction ?
-
 ### Synthèse des résultats
 
 ```{r final_recommendations}
@@ -3492,7 +2823,9 @@ kable(channel_effects, digits = 3,
 
 ### Recommandations stratégiques
 
-#### 1. Chaînes à promouvoir (effet positif fort)
+#### 1. Chaînes à promouvoir
+
+(effet positif fort)
 
 Les chaînes suivantes ont un impact positif significatif sur la satisfaction :
 
@@ -3511,9 +2844,11 @@ if(nrow(top_positive) > 0) {
 }
 ```
 
-#### 2. Chaînes à retravailler (effet négatif)
+<!-- #### 2. Chaînes à retravailler
 
-Les chaînes suivantes ont un impact négatif sur la satisfaction :
+(effet négatif)
+
+Les chaînes suivantes ont un impact négatif sur la satisfaction : -->
 
 ```{r negative_recommendations}
 if(nrow(top_negative) > 0) {
@@ -3537,6 +2872,7 @@ if(nrow(top_negative) > 0) {
 ## Introduction
 
 L'**Approximate Bayesian Computation (ABC)** est une famille de méthodes d'inférence bayésienne utilisée lorsque :
+
 + La vraisemblance $f\left(Y|\theta\right)$ est difficile ou impossible à calculer analytiquement ;
 + Mais on peut simuler facilement des données depuis le modèle.
 
@@ -3547,13 +2883,16 @@ L'**Approximate Bayesian Computation (ABC)** est une famille de méthodes d'inf�
 ### Algorithme ABC standard
 
 Pour $j = 1, \dots, N$ (nombre d'échantillons souhaités) :
-  Répéter :
-    1. Générer $\theta^{*} \sim \pi (\theta)$           # Tirage depuis la loi a priori
-    2. Simuler $Y^{*} \sim f(\cdot \mid \theta^{*})$         # Simulation de données
-    3. Calculer distance $\rho (S(Y^{*}), S(Y))$   # Comparaison via statistiques résumées
-  Jusqu'à ce que $\rho (S(Y^{*}), S(Y)) \leq \epsilon$ 
-  
-  Retenir $\theta^{*}(j) = \theta^{*}$
+\begin{itemize}
+\item Répéter :
+  \begin{itemize}
+    \item 1. Générer $\theta^{*} \sim \pi (\theta)$
+    \item 2. Simuler $Y^{*} \sim f(\cdot \mid \theta^{*})$
+    \item 3. Calculer distance $\rho (S(Y^{*}), S(Y))$
+  \end{itemize}
+\item Jusqu'à ce que $\rho (S(Y^{*}), S(Y)) \leq \epsilon$ 
+\item Retenir $\theta^{*}(j) = \theta^{*}$
+\end{itemize}
 Fin
 
 **Composantes clés** :
@@ -3571,18 +2910,16 @@ On peut montrer que l'ABC échantillonne approximativement depuis :
 
 $$\pi_{ABC}(\theta) = \pi(\theta | \rho(S(Y), S(Y^*)) \leq \varepsilon)$$
 
-**Limite** : Quand $\varepsilon \to 0$ et si $S(Y)$ est une statistique **suffisante**, alors :
-$$\pi_{ABC}(\theta) \to \pi(\theta | Y)$$
+**Limite** : Quand $\varepsilon \to 0$ et si $S(Y)$ est une statistique **suffisante**, alors $\pi_{ABC}(\theta) \to \pi(\theta | Y)$.
 
 ### Application au modèle de régression
 
 Pour notre modèle :
-$$Y = \mu \mathbf{1} + X\beta + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2_\epsilon I)$$
+
+$$Y = \mu \mathbb{I} + X\beta + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2_\epsilon I)$$
 
 - **Paramètres** : $\theta = (\mu, \beta, \sigma^2_\epsilon)$
-- **Vraisemblance** : $f(Y|\theta) = (2\pi\sigma^2_\epsilon)^{-n/2} \exp\left(-\frac{1}{2\sigma^2_\epsilon}\|Y - \mu\mathbf{1} - X\beta\|^2\right)$
-
-**Note** : Pour la régression linéaire, la vraisemblance est **facile** à calculer $\to$ ABC n'est pas optimal ici. Mais c'est un excellent exercice pédagogique !
+- **Vraisemblance** : $f(Y|\theta) = (2\pi\sigma^2_\epsilon)^{-n/2} \exp\left(-\frac{1}{2\sigma^2_\epsilon}\|Y - \mu\mathbf{I} - X\beta\|^2\right)$
 
 ## 12.1 Implémentation ABC standard
 
@@ -3737,7 +3074,7 @@ kable(
   escape = FALSE,   # indispensable pour afficher le LaTeX
   caption = "Distributions a posteriori ABC vs estimations Bayes A"
 ) %>%
-  kable_styling(latex_options = "hold_position")
+  kable_styling(latex_options = "hold_position", "scale_down")
 ```
 
 ```{r plot_abc_distributions}
@@ -3980,30 +3317,31 @@ gridExtra::grid.arrange(p1, p2, ncol = 1)
 
 ### Analyse comparative
 
-**1. Taux d'acceptation**
-- ABC standard : $\sim$ `r round(100*abc_result$acceptance_rate, 2)`%
-- ABC test KS : $\sim$ `r round(100*abc_ks_result$acceptance_rate, 2)`%
-- Le test KS est généralement **plus strict** $\to$ taux plus faible
+**1. Taux d’acceptation**
+
+Le taux d’acceptation obtenu avec la méthode ABC standard est d’environ `r round(100*abc_result$acceptance_rate, 2)` %, tandis que celui obtenu avec l’approche ABC fondée sur le test de Kolmogorov–Smirnov (KS) est d’environ `r round(100*abc_ks_result$acceptance_rate, 2)` %.  
+Le test KS étant généralement plus strict, il conduit logiquement à un taux d’acceptation plus faible.
 
 **2. Précision des estimations**
-- Les deux méthodes convergent vers des valeurs similaires
-- ABC-KS peut être légèrement biaisé si le test est trop conservateur
+
+Les deux méthodes produisent des estimations qui convergent vers des valeurs similaires. Toutefois, l’approche ABC-KS peut introduire un léger biais lorsque le test est paramétré de manière trop conservatrice, ce qui augmente le risque de rejeter des simulations pourtant compatibles.
 
 **3. Interprétation**
-- **ABC standard** : contrôle direct via $\epsilon$ (paramètre arbitraire)
-- **ABC test KS** : contrôle via p-value (interprétation statistique claire)
+
+L’ABC standard repose sur un seuil ($\epsilon$), choisi de manière arbitraire, qui contrôle directement la tolérance entre données simulées et observées.  
+À l’inverse, l’ABC basé sur le test KS utilise une p-value, offrant une interprétation statistique plus explicite du critère d’acceptation.
 
 **4. Avantages du test KS**
-- Pas besoin de choisir des statistiques résumées
-- Interprétation statistique (p-value)
-- Utilise toute l'information de la distribution empirique
+
+- Pas besoin de définir des statistiques résumées  
+- Critère d’acceptation fondé sur une p-value, donc directement interprétable  
+- Exploite l’ensemble de la distribution empirique
 
 **5. Limites du test KS**
-- Peut être trop conservateur (rejette trop)
-- Moins puissant pour détecter certaines différences fines
-- Sensible à la taille de l'échantillon
 
----
+- Peut être trop conservateur et rejeter un nombre excessif de simulations  
+- Moins puissant pour détecter certaines différences fines  
+- Sensible à la taille de l’échantillon
 
 ## 12.3 Choix du seuil ($\epsilon$ ou $p-value$)
 
@@ -4038,30 +3376,33 @@ kable(epsilon_comparison, digits = 3,
 ```
 
 **Observations** :
+
 - **$\epsilon$ petit** : estimations précises mais peu d'acceptations (calcul long)
 - **$\epsilon$ grand** : beaucoup d'acceptations mais biais potentiel
 - **Compromis optimal** : taux d'acceptation entre 1-5%
-
----
 
 ## 12.4 Avantages et limites de l'ABC
 
 ### Avantages
 
 1. **Pas besoin de vraisemblance explicite**
+
    - Applicable à des modèles très complexes
    - Modèles avec équations différentielles, processus stochastiques
    - Modèles multi-échelles, agent-based models
 
 2. **Simulation facile**
+
    - Si on peut simuler depuis le modèle → ABC applicable
    - Plus simple que dériver analytiquement la vraisemblance
 
 3. **Interprétation intuitive**
+
    - Principe : "accepter les paramètres qui génèrent des données similaires"
    - Accessible conceptuellement
 
 4. **Flexibilité**
+
    - Choix libre des statistiques résumées
    - Choix libre de la distance
    - Modifications faciles (test KS, autres tests)
@@ -4069,40 +3410,47 @@ kable(epsilon_comparison, digits = 3,
 ### Limites
 
 1. **Efficacité computationnelle catastrophique en haute dimension**
+
    - Taux d'acceptation : $\sim$ $\varepsilon^p$ où p = dimension
    - Notre exemple 2D : 1-5% acceptable
    - Dimension 10 : < 0.001% $\to$ millions de simulations
    - Dimension 160 (nos $\beta$) : **impraticable**
 
 2. **Choix des statistiques résumées (crucial)**
+
    - Statistiques **non suffisantes** $\to$ perte d'information
    - Pas de méthode universelle pour les choisir
    - Compromis dimension/information
 
 3. **Choix du seuil $\epsilon$ (difficile)**
+
    - Pas de règle optimale
    - $\epsilon$ petit : précis mais coûteux
    - $\epsilon$ grand : rapide mais biaisé
    - Nécessite souvent plusieurs essais
 
 4. **Approximation (pas exact)**
+
    - ABC donne $\pi(\theta | \rho(S(Y), S(Y^*)) < \varepsilon)$
    - Ce n'est **pas** exactement $\pi(\theta | Y)$
    - Qualité dépend de $\varepsilon$ et des statistiques
 
 5. **Validation difficile**
+
    - Comment savoir si on a convergé ?
    - Pas de diagnostic comme pour MCMC
 
 ### Quand utiliser ABC ?
 
-**On utiliser ABC lorsque :**
+**On peut utiliser ABC lorsque :**
+
 - Vraisemblance intractable ou inconnue
 - Modèles génératifs complexes
 - Prototypage rapide d'un modèle exploratoire
 - Dimension faible (< 10 paramètres)
 
-**On ne utilise pas ABC lorsque :**
+**On n'tilise pas ABC lorsque :**
+
 - Vraisemblance facile à calculer (notre cas !)
 - Haute dimension (> 20 paramètres)
 - Besoin de précision maximale
@@ -4168,12 +3516,14 @@ L'ABC est **pédagogiquement intéressant** mais **pratiquement sous-optimal** :
 
 ### Apport de la modification (test KS)
 
-*Avantages** :
+**Avantages** :
+
 - Interprétation statistique claire (p-value)
 - Pas de choix arbitraire de statistiques résumées
 - Utilise toute la distribution
 
-*Inconvénients** :
+**Inconvénients** :
+
 - Peut être trop conservateur
 - Taux d'acceptation souvent plus faible
 - Pas nécessairement plus précis
@@ -4192,13 +3542,16 @@ L'ABC est **pédagogiquement intéressant** mais **pratiquement sous-optimal** :
 ### Cas d'usage réels de l'ABC
 
 1. **Génétique des populations**
+
    - Histoire démographique complexe
    - Mutations, recombinaisons, sélection
 
 2. **Épidémiologie**
+
    - Modèles SIR/SEIR complexes
    - Réseaux de contacts
 
 3. **Écologie**
+
    - Dynamiques de populations
    - Modèles proie-prédateur
