@@ -1376,8 +1376,7 @@ comparison_methods$Différence <- comparison_methods$LASSO - comparison_methods$
 kable(comparison_methods, digits = 4,
       escape = FALSE,   # IMPORTANT pour afficher le LaTeX dans la colonne Critère
       caption = "Comparaison quantitative : Bayes A vs LASSO bayésien") %>%
-  kable_styling(latex_options = "hold_position") %>%
-  column_spec(1, latex_column_spec = "p{7cm}")
+  kable_styling(latex_options = "hold_position")
 ```
 
 **Analyse du tableau 15** :
@@ -1615,8 +1614,8 @@ set.seed(123)
 # Paramètres
 pi_prior <- 0.1   # A priori : 10% des variables sélectionnées
 c_param <- 50     # Coefficient de sélection modéré
-nIter_ssvs <- 15000
-burnIn_ssvs <- 3000
+nIter_ssvs <- 150
+burnIn_ssvs <- 30
 
 cat("Lancement de SSVS...\n")
 cat("Paramètres : $\\pi=$", pi_prior, ", c =", c_param, "\n\n")
@@ -1727,20 +1726,20 @@ ggplot(trace_df, aes(x = iteration, y = gamma, color = type)) +
 
 # Configuration 1 : pi faible (a priori parcimonieux)
 pi1 <- 0.05
-ssvs1 <- selection_SSVS(y_train, X_train, nIter = 8000, burnIn = 2000,
+ssvs1 <- selection_SSVS(y_train, X_train, nIter = 80, burnIn = 20,
                         pi_prior = pi1, c_param = 50, r_change = 3)
 
 # Configuration 2 : pi élevé (a priori généreux)
 pi2 <- 0.3
-ssvs2 <- selection_SSVS(y_train, X_train, nIter = 8000, burnIn = 2000,
+ssvs2 <- selection_SSVS(y_train, X_train, nIter = 80, burnIn = 20,
                         pi_prior = pi2, c_param = 50, r_change = 3)
 
 # Configuration 3 : c faible (peu de confiance dans les données)
-ssvs3 <- selection_SSVS(y_train, X_train, nIter = 8000, burnIn = 2000,
+ssvs3 <- selection_SSVS(y_train, X_train, nIter = 80, burnIn = 20,
                         pi_prior = 0.1, c_param = 10, r_change = 3)
 
 # Configuration 4 : c élevé (forte confiance dans les données)
-ssvs4 <- selection_SSVS(y_train, X_train, nIter = 8000, burnIn = 2000,
+ssvs4 <- selection_SSVS(y_train, X_train, nIter = 80, burnIn = 20,
                         pi_prior = 0.1, c_param = 200, r_change = 3)
 
 # Comparaison des sélections
@@ -3075,8 +3074,7 @@ kable(
   escape = FALSE,   # indispensable pour afficher le LaTeX
   caption = "Distributions a posteriori ABC vs estimations Bayes A"
 ) %>%
-  kable_styling(latex_options = "hold_position", "scale_down") %>%
-  column_spec(1, latex_column_spec = "p{7cm}")
+  kable_styling(latex_options = "hold_position", "scale_down")
 ```
 
 ```{r plot_abc_distributions}
