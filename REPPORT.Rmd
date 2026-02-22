@@ -1376,7 +1376,8 @@ comparison_methods$Différence <- comparison_methods$LASSO - comparison_methods$
 kable(comparison_methods, digits = 4,
       escape = FALSE,   # IMPORTANT pour afficher le LaTeX dans la colonne Critère
       caption = "Comparaison quantitative : Bayes A vs LASSO bayésien") %>%
-  kable_styling(latex_options = "hold_position")
+  kable_styling(latex_options = "hold_position") %>%
+  column_spec(1, latex_column_spec = "p{7cm}")
 ```
 
 **Analyse du tableau 15** :
@@ -3074,7 +3075,8 @@ kable(
   escape = FALSE,   # indispensable pour afficher le LaTeX
   caption = "Distributions a posteriori ABC vs estimations Bayes A"
 ) %>%
-  kable_styling(latex_options = "hold_position", "scale_down")
+  kable_styling(latex_options = "hold_position", "scale_down") %>%
+  column_spec(1, latex_column_spec = "p{7cm}")
 ```
 
 ```{r plot_abc_distributions}
